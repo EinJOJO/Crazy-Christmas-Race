@@ -1,0 +1,61 @@
+{
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "c:\\Program Files\\Greenfoot\\lib\\extensions\\greenfoot.jar",
+        "c:\\Program Files\\Greenfoot\\lib\\extensions\\submitter.jar",
+        "d:\\Tools\\Greenfoot\\greenfoot\\lib\\greenfoot.jar"
+    ],
+    "hidefiles.configurationType": "local",
+    "hidefiles.globalConfig": {
+        "profiles": [
+            {
+                "name": "Default",
+                "detail": "",
+                "description": "Test",
+                "hidden": [
+                    ".vscode/"
+                ],
+                "peek": [
+                    ".vscode/"
+                ]
+            },
+            {
+                "name": "Strict",
+                "detail": "Hide everything not immediately required",
+                "hidden": [
+                    "$Default"
+                ]
+            },
+            {
+                "hidden": [
+                    "$Default",
+                    "**/*.class",
+                    "**/*.ctxt",
+                    "Game Base/doc/"
+                ],
+                "name": "Greenfoot",
+                "description": "Use for greenfoot",
+                "detail": "",
+                "peek": []
+            }
+        ]
+    },
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        ".vscode/": true,
+        "**/*.class": true,
+        "**/*.ctxt": true,
+        "Game Base/doc/": true
+    },
+    
+    "hidefiles.selectedProfile": "Greenfoot",
+    "cSpell.words": [
+        "drehe",
+        "Robo",
+        "Roboter"
+    ]
+}
