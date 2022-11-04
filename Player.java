@@ -1,42 +1,61 @@
-import greenfoot.*;
-
-/**
- * Die Eigenschaften des Spielers
- */
-public class Player extends Actor {
- 
-    /*
-     * Index:
-     * 0: up
-     * 1: left
-     * 2: right
-     * 3: down
-     */
-    private final String[] controlKeys; 
-    private int speed;
-
+    import greenfoot.*;
+    
     /**
-     * 
-     * @param controlKeys Bsp: new char[]{'w','a','s','d'} => up, left, right, down
+     * Die Eigenschaften des Spielers
      */
-    public Player(String[] controlKeys) {
-        //Parameter auf richtigkeit überprüfen.
-        if (controlKeys.length != 4) {
-            throw new Error("Parameter controlKeys ungültig.");
+    public class Player extends Actor {
+     
+        /*
+         * Index:
+         * 0: up
+         * 1: left
+         * 2: right
+         * 3: down
+         */
+        private final String[] controlKeys; 
+        private int speed;
+    
+        /**
+         * 
+         * @param controlKeys Bsp: new char[]{'w','a','s','d'} => up, left, right, down
+         */
+        public Player(String[] controlKeys) {
+            //Parameter auf richtigkeit überprüfen.
+            if (controlKeys.length != 4) {
+                throw new Error("Parameter controlKeys ungültig.");
+            }
+            this.controlKeys = controlKeys;
+            this.speed = 2;
         }
-        this.controlKeys = controlKeys;
-        this.speed = 2;
-    }
-
-    //Implementieren
-    @Override
-    public void act() {
+    
+        //Implementieren
+        @Override
+        public void act() {
         handleInput();
-        
-        //Wird das Haus berührt?
-        //Wird ein Auto berührt?
+            
+        if (isTouchingHouse())
+        {
+                
+        }
+        //Wird das Haus berührt?    
+        if (isOnIce())
+        {
+            System.out.println("Ja");
+        }
         //Wird Eis berührt?
+        if (isColliding())
+        {
+            
+        }
+        //Wird ein Auto berührt?
+       
+         
+        if(isOnSlide())
+        {
+            
+        }
         //Fährt er Schlitten?
+        
         
     }
 
@@ -77,7 +96,16 @@ public class Player extends Actor {
     
     //Implementieren
     private boolean isOnIce() {
-        //Ist der Spieler über y1 und unter y2 und nicht auf einem Schlitten?
+        int y = getY();
+        if(isOnSlide())
+        {
+            return false;
+        }//Ist der Spieler über y1 und unter y2 und nicht auf einem Schlitten?
+        
+        if (y>60&&y<290)
+        {
+            return true;
+        }
         return false;
     }
     
