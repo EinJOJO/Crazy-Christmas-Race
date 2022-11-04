@@ -25,6 +25,11 @@ public class Schlitten extends Actor
         // bis zum anderen Rand gefahren ist
     }
     
+    public void aufSchlittenFahren()
+    {
+        Schlitten schlitten= (Schlitten)getIntersectingObjects(Schlitten.class).get(0);
+        setLocation(getX())+schlitten.getSpeed(),getY());
+    }
     public void loescheMich()
     {
         getWorld().removeObject(this);
