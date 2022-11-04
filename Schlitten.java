@@ -28,13 +28,13 @@ public class Schlitten extends Actor
     public void aufSchlittenFahren()
     {
         Schlitten schlitten= (Schlitten)getIntersectingObjects(Schlitten.class).get(0);
-        setLocation(getX())+schlitten.getSpeed(),getY());
+        setLocation(getX()+schlitten.getSpeed(),   getY());
     }
     public void loescheMich()
     {
         getWorld().removeObject(this);
     }
-    
+        
     // Diese Methode teilt dem aufrufenden Objekt mit, welche Geschwindigkeit der Schlitten hat
     // Dies ist nur wichtig, wenn man auf dem Schlitten fahren können soll
     public int getSpeed()
