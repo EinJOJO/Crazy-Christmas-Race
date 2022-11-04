@@ -4,6 +4,6 @@ public class Santa extends Player
 {
     public Santa()
     {
-        super(new String[]{"w","a","s","d"});       
+        super(new String[]{"w","a","s","d"}, 536, 580);       
     }
 }

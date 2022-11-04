@@ -14,18 +14,22 @@ public class Player extends Actor {
      */
     private final String[] controlKeys; 
     private int speed;
+    private final int spawnX;
+    private final int spawnY;
 
     /**
      * 
      * @param controlKeys Bsp: new char[]{'w','a','s','d'} => up, left, right, down
      */
-    public Player(String[] controlKeys) {
+    public Player(String[] controlKeys, int spawnX, int spawnY) {
         //Parameter auf richtigkeit überprüfen.
         if (controlKeys.length != 4) {
             throw new Error("Parameter controlKeys ungültig.");
         }
         this.controlKeys = controlKeys;
         this.speed = 2;
+        this.spawnX = spawnX;
+        this.spawnY = spawnY;
     }
 
     //Implementieren
@@ -39,6 +43,11 @@ public class Player extends Actor {
         //Fährt er Schlitten?
         
     }
+    
+    public void respawn () {
+        setLocation(spawnX, spawnY);
+    }
+    
 
     
     private void handleInput () {
