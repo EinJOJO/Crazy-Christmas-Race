@@ -11,13 +11,15 @@ public class Auto extends Actor
 
     private final boolean blau;
     private final int speed;
+    private final boolean drivesToLeft;
 
     public Auto() {
         this.blau = true;
         this.speed = 2;
+        this.drivesToLeft = false;
     }
 
-    public Auto(int speed, boolean autoBlau)
+    public Auto(int speed, boolean autoBlau, boolean drivesToLeft)
     {
         this.speed = speed;
         this.blau = autoBlau;
@@ -25,6 +27,11 @@ public class Auto extends Actor
             setImage("car01.png");
         } else {
             setImage("car02.png");
+        }
+        
+        this.drivesToLeft = drivesToLeft;
+        if (drivesToLeft) {
+            setRotation(180);
         }
     }
 
@@ -36,9 +43,18 @@ public class Auto extends Actor
      */
     public void act() 
     {
-        move(speed);
+        World world = getWorld();
+        if (drivesToLeft) {
+            setLocation(getX() - speed, getY());
+        } else {
+            setLocation(getX() + speed, getY());
+        }
         if (isAtEdge()) {
-            setLocation(0, getY());
+            if (drivesToLeft) {
+                setLocation(getWorld().getWidth(), getY());
+            } else {
+                setLocation(0, getY());
+            }
         }
         
     }

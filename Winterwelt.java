@@ -38,18 +38,17 @@ public class Winterwelt extends World
 
         spielerUndHausErstellen();
         autosErstellen();
+
         
     }
 
     private void spielerUndHausErstellen()
 
-    
     {
-         
         Santa santa = new Santa();
         addObject(santa,0,0);
         santa.respawn();
-        
+
         Rentier rentier = new Rentier();
         addObject(rentier,0,0);
         rentier.respawn();
@@ -58,19 +57,25 @@ public class Winterwelt extends World
         addObject(haus,400,20);
 
     }
+
     private void autosErstellen() {
         //Reihe 1
-        int reiheEins = 322;
-        addObject(new Auto(),138, reiheEins);
-        addObject(new Auto(),418, reiheEins);
-        addObject(new Auto(),700, reiheEins);
+
+        addObject(new Auto(),138, 322);
+        addObject(new Auto(2, true, false),418, 322);
+        addObject(new Auto(),700, 322);
         //Reihe 2
-        int reiheZwei = 376;
-        
-
+        addObject(new Auto(4, true, true),41,374);
+        addObject(new Auto(4, false, true),400,374);
+        addObject(new Auto(4, false, true),494,374);
         //Reihe 3
+        addObject(new Auto(3, false, true),275,423);
+        addObject(new Auto(3, true, true),670,423);
+        // Reihe 4
+        addObject(new Auto(4, true, true),114,475);
+        addObject(new Auto(4, true, true),423,475);
 
+        addObject(new Auto(),49,526);
     } 
-
 
 }
