@@ -1,9 +1,8 @@
-import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 public class Santa extends Player
 {
     public Santa()
     {
-        super(new String[]{"w","a","s","d"}, 536, 580);       
+        super(new String[]{"w","a","s","d"}, 266, 580, Winterwelt.counterSanta );       
     }
 }

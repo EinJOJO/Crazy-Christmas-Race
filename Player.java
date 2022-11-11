@@ -16,12 +16,13 @@ public class Player extends Actor {
     private int speed;
     private final int spawnX;
     private final int spawnY;
+    private final Zaehler pointsCounter;
 
     /**
      * 
      * @param controlKeys Bsp: new char[]{'w','a','s','d'} => up, left, right, down
      */
-    public Player(String[] controlKeys, int spawnX, int spawnY) {
+    public Player(String[] controlKeys, int spawnX, int spawnY, Zaehler pointsCounter) {
         //Parameter auf richtigkeit überprüfen.
         if (controlKeys.length != 4) {
             throw new Error("Parameter controlKeys ungültig.");
@@ -30,6 +31,7 @@ public class Player extends Actor {
         this.speed = 2;
         this.spawnX = spawnX;
         this.spawnY = spawnY;
+        this.pointsCounter = pointsCounter;
     }
 
     //Implementieren
@@ -38,9 +40,24 @@ public class Player extends Actor {
         handleInput();
         
         //Wird das Haus berührt?
+        if (isTouchingHouse()) {
+            respawn();
+            increasePoints();
+        }
+
+    
         //Wird ein Auto berührt?
+        if (isTouchingCar()) {
+
+        }
         //Wird Eis berührt?
+        if (isOnIce()) {
+
+        }
         //Fährt er Schlitten?
+        if (isOnSlide()) {
+
+        }
         
     }
     
@@ -69,12 +86,10 @@ public class Player extends Actor {
 
     /**
      * Erhöht die Punkte
-     * @param zaehler Zöhlerobject des Spielers. (Beispiel: Winterwelt.counterSanta)
-     * 
      */
-    public void increasePoints(Zaehler zaehler) {
-        zaehler.erhoehe();
-        zaehler.update();
+    public void increasePoints() {
+        pointsCounter.erhoehe();
+        pointsCounter.update();
     }        
     
     /**
@@ -95,7 +110,7 @@ public class Player extends Actor {
      * 
      * @return Ob das Objekt ein Auto berührt
      */
-    public boolean isColliding()
+    public boolean isTouchingCar()
     {
         return (getIntersectingObjects(Auto.class).size() > 0);
     }
