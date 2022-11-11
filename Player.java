@@ -43,15 +43,16 @@ public class Player extends Actor {
             
         if (isTouchingHouse())
         {
+            increasePoints();
             
-        }
+        }    
         //Wird das Haus berührt?    
         if (isOnIce())
         {
             respawn();
         }
         //Wird Eis berührt?
-        if (isColliding())
+        if (isTouchingCar())
         {
             respawn();
         }
