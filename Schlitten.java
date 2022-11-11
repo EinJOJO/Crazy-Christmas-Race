@@ -13,7 +13,7 @@ public class Schlitten extends Actor
     
     public Schlitten()
     {
-        
+        this.speed = 3;
     }
     
     /**

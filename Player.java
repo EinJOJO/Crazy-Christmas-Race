@@ -39,17 +39,17 @@ public class Player extends Actor {
             
         if (isTouchingHouse())
         {
-                        
+            
         }
         //Wird das Haus berührt?    
         if (isOnIce())
         {
-            System.out.println("Ja");
+            respawn();
         }
         //Wird Eis berührt?
         if (isColliding())
         {
-            
+            respawn();
         }
         //Wird ein Auto berührt?
        
