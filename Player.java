@@ -1,41 +1,45 @@
-    import greenfoot.*;
-    
-    /**
-     * Die Eigenschaften des Spielers
+
+import greenfoot.*;
+
+/**
+ * Die Eigenschaften des Spielers
+ */
+public class Player extends Actor {
+ 
+    /*
+     * Index:
+     * 0: up
+     * 1: left
+     * 2: right
+     * 3: down
      */
-    public class Player extends Actor {
-     
-        /*
-         * Index:
-         * 0: up
-         * 1: left
-         * 2: right
-         * 3: down
-         */
-        private final String[] controlKeys; 
-        private int speed;
+    private final String[] controlKeys; 
+    private int speed;
+    private final int spawnX;
+    private final int spawnY;
+
+
     
-        /**
-         * 
-         * @param controlKeys Bsp: new char[]{'w','a','s','d'} => up, left, right, down
-         */
-        public Player(String[] controlKeys) {
-            //Parameter auf richtigkeit überprüfen.
-            if (controlKeys.length != 4) {
-                throw new Error("Parameter controlKeys ungültig.");
-            }
-            this.controlKeys = controlKeys;
-            this.speed = 2;
+
+    public Player(String[] controlKeys, int spawnX, int spawnY) {
+        //Parameter auf richtigkeit überprüfen.
+        if (controlKeys.length != 4) {
+            throw new Error("Parameter controlKeys ungültig.");
         }
-    
-        //Implementieren
-        @Override
-        public void act() {
+        this.controlKeys = controlKeys;
+        this.speed = 2;
+        this.spawnX = spawnX;
+        this.spawnY = spawnY;
+    }
+
+    //Implementieren
+    @Override
+    public void act() {
         handleInput();
             
         if (isTouchingHouse())
         {
-                
+                        
         }
         //Wird das Haus berührt?    
         if (isOnIce())
@@ -58,6 +62,11 @@
         
         
     }
+    
+    public void respawn () {
+        setLocation(spawnX, spawnY);
+    }
+    
 
     
     private void handleInput () {

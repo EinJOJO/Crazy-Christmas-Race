@@ -47,10 +47,12 @@ public class Winterwelt extends World
     {
          
         Santa santa = new Santa();
-        addObject(santa,266,580);
-
+        addObject(santa,0,0);
+        santa.respawn();
+        
         Rentier rentier = new Rentier();
-        addObject(rentier,536,579);
+        addObject(rentier,0,0);
+        rentier.respawn();
 
         Haus haus = new Haus();
         addObject(haus,400,20);
