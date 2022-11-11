@@ -1,3 +1,5 @@
+import javax.swing.plaf.basic.BasicSplitPaneUI.BasicHorizontalLayoutManager;
+
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
@@ -8,10 +10,23 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Button extends Actor
 {
-    /**
-     * Act - do whatever the Button wants to do. This method is called whenever
-     * the 'Act' or 'Run' button gets pressed in the environment.
-     */
+    private String buttonText;
+    
+    
+    public Button() {
+        this.buttonText = "Unnamed";
+    }
+    
+    public Button(String text) {
+        this.buttonText  = text;
+    }
+
+
+
+    public void onHover() {
+
+    }
+    
     public void act() 
     {
         // Add your action code here.
