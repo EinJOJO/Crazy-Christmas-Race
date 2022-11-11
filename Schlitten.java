@@ -10,9 +10,10 @@ public class Schlitten extends Actor
 {
     int speed;
     
+    
     public Schlitten()
     {
-        
+        this.speed = 3;
     }
     
     /**
@@ -30,6 +31,7 @@ public class Schlitten extends Actor
         Schlitten schlitten= (Schlitten)getIntersectingObjects(Schlitten.class).get(0);
         setLocation(getX()+schlitten.getSpeed(),   getY());
     }
+    
     public void loescheMich()
     {
         getWorld().removeObject(this);

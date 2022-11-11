@@ -1,3 +1,4 @@
+
 import greenfoot.*;
 
 /**
@@ -17,6 +18,7 @@ public class Player extends Actor {
     private final int spawnX;
     private final int spawnY;
     private final Zaehler pointsCounter;
+
 
     /**
      * 
@@ -38,26 +40,30 @@ public class Player extends Actor {
     @Override
     public void act() {
         handleInput();
-        
-        //Wird das Haus berührt?
-        if (isTouchingHouse()) {
-            respawn();
-            increasePoints();
+            
+        if (isTouchingHouse())
+        {
+            
         }
-
-    
-        //Wird ein Auto berührt?
-        if (isTouchingCar()) {
-
+        //Wird das Haus berührt?    
+        if (isOnIce())
+        {
+            respawn();
         }
         //Wird Eis berührt?
-        if (isOnIce()) {
-
+        if (isColliding())
+        {
+            respawn();
         }
-        //Fährt er Schlitten?
-        if (isOnSlide()) {
-
+        //Wird ein Auto berührt?
+       
+         
+        if(isOnSlide())
+        {
+            
         }
+        
+        
         
     }
     
@@ -101,7 +107,16 @@ public class Player extends Actor {
     
     //Implementieren
     private boolean isOnIce() {
-        //Ist der Spieler über y1 und unter y2 und nicht auf einem Schlitten?
+        int y = getY();
+        if(isOnSlide())
+        {
+            return false;
+        }//Ist der Spieler über y1 und unter y2 und nicht auf einem Schlitten?
+        
+        if (y>60&&y<290)
+        {
+            return true;
+        }
         return false;
     }
     
