@@ -22,6 +22,12 @@ public class Schlitten extends Actor
      */
     public void act() 
     {
+        if (isAtEdge())
+        {
+            
+            setLocation(0, getY());
+            
+        }
         // Der Schlitten soll sich bewegen und aus der Welt gelöscht werden, wenn er
         // bis zum anderen Rand gefahren ist
     }
