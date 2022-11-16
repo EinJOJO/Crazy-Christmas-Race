@@ -30,6 +30,11 @@ public class Auto extends Actor
         this.blue = autoBlau;
         this.drivingLeft = drivesToLeft;
 
+        if (speed <= 0) {
+            getWorld().removeObject(this);
+            return;
+        }
+
         //Textur setzten: Blaues oder Rotes Auto
         if (autoBlau) {
             setImage("car01.png");
@@ -73,5 +78,8 @@ public class Auto extends Actor
         return blue;
     }
 
-   
+    public void loescheMich()
+    {
+        getWorld().removeObject(this);
+    }
 }
