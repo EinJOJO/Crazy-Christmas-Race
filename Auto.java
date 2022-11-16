@@ -1,56 +1,61 @@
-import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import greenfoot.*;
 
 /**
- * Write a description of class Auto here.
- * 
+ * Auto macht brumm bruumm.
  * @author Johannes
 
  */
 public class Auto extends Actor
-{
-
-    private final boolean blau;
+{    
+    private final boolean blue;
     private final int speed;
-    private final boolean drivesToLeft;
+    private final boolean drivingLeft;
 
+    /**
+     * Konstruktor 1 von 2. Leere Parameter:
+     * Erstellt ein Blaues Auto, welches mit einer Geschwindigkeit von 2 nach rechts fährt.
+     */
     public Auto() {
-        this.blau = true;
+        this.blue = true;
         this.speed = 2;
-        this.drivesToLeft = false;
+        this.drivingLeft = false;
     }
 
+    /**
+    * Konstruktor 2 von 2. Dieser nimmt alle Parameter, sodass alles eingestellt werden kann.
+    */
     public Auto(int speed, boolean autoBlau, boolean drivesToLeft)
     {
         this.speed = speed;
-        this.blau = autoBlau;
+        this.blue = autoBlau;
+        this.drivingLeft = drivesToLeft;
+
+        //Textur setzten: Blaues oder Rotes Auto
         if (autoBlau) {
             setImage("car01.png");
         } else {
             setImage("car02.png");
         }
         
-        this.drivesToLeft = drivesToLeft;
+        //Durch die Symmetrie kann man die Autos einfach drehen.
         if (drivesToLeft) {
             setRotation(180);
         }
     }
 
-    
-    
-    /**
-     * Act - do whatever the Auto wants to do. This method is called whenever
-     * the 'Act' or 'Run' button gets pressed in the environment.
-     */
+
     public void act() 
     {
-        World world = getWorld();
-        if (drivesToLeft) {
+        //Auto bewegen.
+        if (drivingLeft) {
             setLocation(getX() - speed, getY());
         } else {
             setLocation(getX() + speed, getY());
         }
+
+        //Auto zurücksetzen
         if (isAtEdge()) {
-            if (drivesToLeft) {
+            if (drivingLeft) {
                 setLocation(getWorld().getWidth(), getY());
             } else {
                 setLocation(0, getY());
@@ -58,7 +63,16 @@ public class Auto extends Actor
         }
         
     }
+
     
+    public boolean isDrivingLeft() {
+        return drivingLeft;
+    }
+
+    public boolean isBlue() {
+        return blue;
+    }
+
     public void loescheMich()
     {
         getWorld().removeObject(this);
