@@ -13,14 +13,11 @@ public class StartScreen extends World
      */
     public StartScreen()
     {    
-        
+
         super(800, 600, 1); 
-        
-        
-        
 
+        prepare();
     }
-
 
     @Override
     public void act() {    
@@ -29,10 +26,19 @@ public class StartScreen extends World
 
     public void loadButtons() {
 
-
     }
 
+    /**
+     * Prepare the world for the start of the program.
+     * That is: create the initial objects and add them to the world.
+     */
+    private void prepare()
+    {
 
+        addObject(new ButtonCredits(),395,417);
 
+        addObject(new ButtonMechanics(),395,333);
 
+        addObject(new ButtonStartGame(),395,253);
+    }
 }
