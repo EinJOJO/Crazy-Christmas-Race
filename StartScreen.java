@@ -1,7 +1,7 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Startmenu
+ * Startmenü
  * 
  * @author Johannes
  */

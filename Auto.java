@@ -1,7 +1,7 @@
 import greenfoot.*;
 
 /**
- * Auto macht brumm bruumm.
+ * Auto brummt brutulm.
  * @author Johannes
 
  */
