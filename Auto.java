@@ -19,7 +19,7 @@ public class Auto extends Actor
         this.drivesToLeft = false;
     }
 
-    public Auto(int speed, boolean autoBlau, boolean drivesToLeft)
+        public Auto(int speed, boolean autoBlau, boolean drivesToLeft)
     {
         this.speed = speed;
         this.blau = autoBlau;
