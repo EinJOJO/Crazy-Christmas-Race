@@ -43,7 +43,7 @@ public class Player extends Actor {
             
         if (isTouchingHouse())
         {
-            increasePoints();
+            pointsCounter.erhoehe();
             
         }    
         //Wird das Haus berührt?    
@@ -90,14 +90,6 @@ public class Player extends Actor {
         }
 
     }
-
-    /**
-     * Erhöht die Punkte
-     */
-    public void increasePoints() {
-        pointsCounter.erhoehe();
-        pointsCounter.update();
-    }        
     
     /**
      * @return Ob der Spieler das Haus berührt.
