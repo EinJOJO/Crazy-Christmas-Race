@@ -73,8 +73,5 @@ public class Auto extends Actor
         return blue;
     }
 
-    public void loescheMich()
-    {
-        getWorld().removeObject(this);
-    }
+   
 }
