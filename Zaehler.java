@@ -1,12 +1,6 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
-
-
-
 /**
- * Write a description of class Zaehler here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
+ * Default
  */
 public class Zaehler  extends Actor
 {
@@ -23,16 +17,6 @@ public class Zaehler  extends Actor
         
     }
     
-    
-    /**
-     * Act - do whatever the Zaehler wants to do. This method is called whenever
-     * the 'Act' or 'Run' button gets pressed in the environment.
-     */
-    public void act() 
-    {
-        // Add your action code here.
-    }    
-    
     public void update()
     {
         counter.clear();
@@ -47,10 +31,17 @@ public class Zaehler  extends Actor
     public void erhoehe()
     {
         punkte += 1;
+        update();
     }
     
     public void verringere()
     {
         punkte -= 1;
+        update();
+    }
+
+    public void setPunkte(int punkte) {
+        this.punkte = punkte;
+        update();
     }
 }
