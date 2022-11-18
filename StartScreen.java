@@ -7,16 +7,21 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class StartScreen extends World
 {
+
+    TextSplash textSplash;
+
     /**
      * Constructor for objects of class StartScreen.
      * 
      */
     public StartScreen()
     {    
-
         super(800, 600, 1); 
-
+        textSplash = TextSplash.getInstance();
+        setPaintOrder(Card.class, Button.class);
         prepare();
+        textSplash.place();
+        textSplash.setRotation(-20);
     }
 
     @Override
@@ -35,10 +40,15 @@ public class StartScreen extends World
     private void prepare()
     {
 
+
+        addObject(textSplash, 565, 455);
+
         addObject(new ButtonCredits(),395,417);
 
         addObject(new ButtonMechanics(),395,333);
 
         addObject(new ButtonStartGame(),395,253);
     }
+
+
 }
