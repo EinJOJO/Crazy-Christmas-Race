@@ -1,0 +1,7 @@
+[IDEE] # Datenbank System mit Top 10 etc.
+- GSON / REST API ? 
+- TEXTDOKUMENT ?
+
+
+
+

@@ -1,10 +1,7 @@
-import java.util.Random;
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class Winterwelt here.
- * 
- * @author (your name) 
+ * Die Spielwelt.
  * @version (a version number or a date)
  */
 public class Winterwelt extends World
@@ -12,8 +9,23 @@ public class Winterwelt extends World
     public static Zaehler counterSanta;
     public static Zaehler counterRentier;
 
-    private Santa santa;
-    private Rentier rentier;
+    private final Difficulty difficulty;
+
+    /**
+     * How much speed on top to the base speed.
+     */
+    public enum Difficulty {
+        NOOB(-2),
+        EASY(1),
+        NORMAL(0),
+        HARD(1),
+        CHALLENGING(2);
+
+        public final int summand;
+        private Difficulty(int summand) {
+            this.summand = summand;
+        }
+    }
 
     /**
      * Constructor for objects of class Winterwelt.
@@ -23,7 +35,16 @@ public class Winterwelt extends World
     {    
         // Erstelle eine Welt mit 600x400 Zellen und einer Zellgröße von 1x1 Pixeln.
         super(800, 600, 1); 
+        this.difficulty = Difficulty.EASY;
+        setup();
+    }
 
+    public Winterwelt(Difficulty difficulty) {
+        super(800, 600, 1); 
+        this.difficulty = difficulty;
+    }
+
+    private void setup() {
         GreenfootImage background = new GreenfootImage("Winterwelt.jpg");
         setBackground(background);
         setPaintOrder(Santa.class, Rentier.class, Zaehler.class, Haus.class, Auto.class, Schlitten.class);
@@ -38,8 +59,6 @@ public class Winterwelt extends World
 
         spielerUndHausErstellen();
         autosErstellen();
-
-        
     }
 
     private void spielerUndHausErstellen()
@@ -60,10 +79,10 @@ public class Winterwelt extends World
 
     private void autosErstellen() {
         //Reihe 1
-
-        addObject(new Auto(),138, 322);
-        addObject(new Auto(2, true, false),418, 322);
-        addObject(new Auto(),700, 322);
+        int speed1 = 2 + getDifficulty().summand;
+        addObject(new Auto(speed1, false, false),138, 322);
+        addObject(new Auto(speed1, true, false),418, 322);
+        addObject(new Auto(speed1, false, false),700, 322);
         //Reihe 2
         addObject(new Auto(4, true, true),41,374);
         addObject(new Auto(4, false, true),400,374);
@@ -77,5 +96,11 @@ public class Winterwelt extends World
 
         addObject(new Auto(),49,526);
     } 
+
+
+
+    public Difficulty getDifficulty() {
+        return difficulty;
+    }
 
 }

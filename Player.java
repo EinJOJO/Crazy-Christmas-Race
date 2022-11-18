@@ -25,7 +25,7 @@ public class Player extends Actor {
      * @param controlKeys Bsp: new char[]{'w','a','s','d'} => up, left, right, down
      */
     public Player(String[] controlKeys, int spawnX, int spawnY, Zaehler pointsCounter) {
-        //Parameter auf richtigkeit überprüfen.
+        //Parameter auf Richtigkeit überprüfen.
         if (controlKeys.length != 4) {
             throw new Error("Parameter controlKeys ungültig.");
         }
@@ -43,7 +43,7 @@ public class Player extends Actor {
             
         if (isTouchingHouse())
         {
-            increasePoints();
+            pointsCounter.erhoehe();
             
         }    
         //Wird das Haus berührt?    
@@ -90,14 +90,6 @@ public class Player extends Actor {
         }
 
     }
-
-    /**
-     * Erhöht die Punkte
-     */
-    public void increasePoints() {
-        pointsCounter.erhoehe();
-        pointsCounter.update();
-    }        
     
     /**
      * @return Ob der Spieler das Haus berührt.
