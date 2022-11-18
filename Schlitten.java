@@ -34,7 +34,7 @@ public class Schlitten extends Actor
             
             setLocation(0, getY());
 
-            }
+        }
             
         
         if (drivesToLeft) {
