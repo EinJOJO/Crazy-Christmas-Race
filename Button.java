@@ -1,10 +1,7 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class Button here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Johannes
  */
 public abstract class Button extends Actor
 {
@@ -15,7 +12,8 @@ public abstract class Button extends Actor
     private int defaultY = -1;
     private int hoverTimeout = 0;
 
-    private MouseInfo mouseInfo = null;
+    private int oldMouseX = 0;
+    private int oldMouseY = 0;
 
     public Button(String imageLink) {
 
@@ -29,37 +27,32 @@ public abstract class Button extends Actor
 
     public void act() 
     {
+        MouseInfo mouseInfo = Greenfoot.getMouseInfo();
         defineDefaultPosition();
-        
-        if (Greenfoot.mouseMoved(this)) { // Wird nur einmal aufgerufen.
-            this.hovering = true;
-            hoverTimeout = 10;
-            
-        } else {
-             if ( mouseInfo != null) {
-                boolean movedX = mouseInfo.getX() != Greenfoot.getMouseInfo().getX();
-                boolean movedY = mouseInfo.getY() != Greenfoot.getMouseInfo().getY();
 
-                if (!movedX && !movedY) {
-                    //Falls die Maus nicht bewegt wurde, befindet sie sich logisch noch auf dem Knopf.
-                    hoverTimeout = 10;
-                } else {
-                    mouseInfo = null;
-                }
-
-             } else {   
-                mouseInfo = Greenfoot.getMouseInfo();
-             }
-            if (hoverTimeout <= 0) {
-                this.hovering = false;
-            } else {
-                hoverTimeout--;
-            }
-            
+        //Is Hovering?
+        if (mouseInfo == null) {
+            return;
         }
+        if (Greenfoot.mouseMoved(this)) {
+            hovering = true;
+            oldMouseX = mouseInfo.getX();
+            oldMouseY = mouseInfo.getY();
+        } else {
+            if (isHovering()) {
+                boolean movedX = oldMouseX != mouseInfo.getX();
+                boolean movedY = oldMouseY != mouseInfo.getY();
 
+                if(!movedX && !movedY) {
+                    hovering = true;
+                } else {
+                    hovering = false;
+                }
+            }
+        }
+        //Hover function
         onHover();
-
+        //Check for clicks.
         if (Greenfoot.mouseClicked(this)) {
             onClick();
         }
@@ -88,13 +81,16 @@ public abstract class Button extends Actor
     }
 
     public void onHover()  {
-        onHoverDefault();
+        hoverPosition();
     }
 
-
+    /**
+     * Damit das Hovern möglich ist, muss der Knopf wissen,
+     * wo die Ursprüngliche Position war.
+     * -1 existiert nicht im Koordinatensystem, weshalb sich
+     * der Wert super eignet, um zu sagen "Noch nicht initiiert"
+     */
     private void defineDefaultPosition() {
-        //Standard Positionen werden gesetzt, sodass der Hovereffekt funktioniert.
-        //-1 sagt aus, dass die Position noch nicht definiert wurde.
         if (getDefaultX() == -1) {
             defaultX = getX(); 
         }
@@ -103,20 +99,29 @@ public abstract class Button extends Actor
         }
     }
 
-    /**
-     * Executed when the persons hovers;
-     */
-    private void onHoverDefault() {
+
+    public void hoverPosition() {
+        hoverPosition(true);
+    }
+
+    public void hoverPosition(boolean animated) {
         int hoverDistance = 5;
 
         if (isHovering()) {
-            if (getY() < getDefaultY() + hoverDistance) {
-                setLocation(getX(), getY() + 1);
+            if (getY() != getDefaultY() + hoverDistance) {
+                if (animated) {
+                    setLocation(getX(), getY() + 1);
+                } else {
+                    setLocation(getX(), hoverDistance);
+                }
             } 
         } else {
             if (getY() != getDefaultY()) {
-                setLocation(getX(), getDefaultY()
-                );
+                if (animated) {
+                    setLocation(getX(), getY() - 1);
+                } else {
+                    setLocation(getX(), hoverDistance);
+                }
             }
         }
     }
