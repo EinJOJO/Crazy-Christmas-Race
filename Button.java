@@ -10,7 +10,7 @@ public abstract class Button extends Actor
 
     private int defaultX = -1;
     private int defaultY = -1;
-    private int hoverTimeout = 0;
+
 
     private int oldMouseX = 0;
     private int oldMouseY = 0;
@@ -82,6 +82,15 @@ public abstract class Button extends Actor
 
     public void onHover()  {
         hoverPosition();
+        GreenfootImage image = getImage();
+        if (isHovering()) {
+            
+            image.setTransparency(0xf0);
+        } else {
+            image.setTransparency(0xff);
+        }
+        
+        setImage(image);
     }
 
     /**
