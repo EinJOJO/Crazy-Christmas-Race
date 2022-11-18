@@ -106,7 +106,7 @@ public class Player extends Actor {
             return false;
         }//Ist der Spieler über y1 und unter y2 und nicht auf einem Schlitten?
         
-        if (y>60&&y<290)
+        if (y>60&&y<280)
         {
             return true;
         }
@@ -120,7 +120,11 @@ public class Player extends Actor {
      */
     public boolean isTouchingCar()
     {
-        return (getIntersectingObjects(Auto.class).size() > 0);
+        Actor a = getOneIntersectingObject(Auto.class);
+        if ( a != null) {
+            return ((Auto) a).isSpawned();
+        };
+        return false;
     }
 
     /**

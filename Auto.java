@@ -10,6 +10,7 @@ public class Auto extends Actor
     private final boolean blue;
     private final int speed;
     private final boolean drivingLeft;
+    private boolean spawned = false; 
 
     /**
      * Konstruktor 1 von 2. Leere Parameter:
@@ -19,6 +20,8 @@ public class Auto extends Actor
         this.blue = true;
         this.speed = 2;
         this.drivingLeft = false;
+
+        spawn();
     }
 
     /**
@@ -37,21 +40,24 @@ public class Auto extends Actor
         }
 
         //Textur setzten: Blaues oder Rotes Auto
-        if (autoBlau) {
-            setImage("car01.png");
-        } else {
-            setImage("car02.png");
-        }
+        
         
         //Durch die Symmetrie kann man die Autos einfach drehen.
         if (drivesToLeft) {
             setRotation(180);
         }
+        spawn();
     }
 
 
+    public boolean isSpawned() {
+        return spawned;
+    }
+
     public void act() 
     {
+
+        if(!spawned) return;
         //Auto bewegen.
         if (drivingLeft) {
             setLocation(getX() - speed, getY());
@@ -61,11 +67,13 @@ public class Auto extends Actor
 
         //Auto zurücksetzen
         if (isAtEdge()) {
+            despawn();
             if (drivingLeft) {
                 setLocation(getWorld().getWidth(), getY());
             } else {
                 setLocation(0, getY());
             }
+            spawn();
         }
         
     }
@@ -79,8 +87,23 @@ public class Auto extends Actor
         return blue;
     }
 
-    public void loescheMich()
-    {
-        getWorld().removeObject(this);
+    public void spawn() {
+        if (!spawned) {
+            if (isBlue()) {
+                setImage("car01.png");
+            } else {
+                setImage("car02.png");
+            }
+
+            spawned = true;
+
+        }
+    }
+
+    public void despawn() {
+        if (spawned) {
+            spawned = false;
+            setImage(new GreenfootImage(1, 1));
+        }
     }
 }
