@@ -30,6 +30,7 @@ public class Textbox extends Actor
         return color;
     }
 
+
     public void setText(String text) {
         this.text = text;
         this.image = new GreenfootImage(9 * text.length() + 20, fontSize + 10);

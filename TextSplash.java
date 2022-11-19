@@ -7,12 +7,16 @@ import java.util.List;
 import java.util.Random;
 
 import greenfoot.Color;
+import greenfoot.GreenfootImage;
 
 public class TextSplash extends Textbox {
 
     private List<String> splashes;
     public static TextSplash instance;
+    private int ticks;
     private int scale;
+    private GreenfootImage original;
+    long time;
 
     public TextSplash() {
         reload();
@@ -63,5 +67,29 @@ public class TextSplash extends Textbox {
     public void place() {
         String text = splashes.get(new Random().nextInt(splashes.size()));
         setText(text);
+        original = null;
+    }
+
+    @Override
+    public void act() {
+        if (time > System.currentTimeMillis()) {
+            return;
+        } else {
+            time = System.currentTimeMillis() + 100;
+        }
+
+
+        GreenfootImage image;
+        
+        if (original == null ) {
+            original = getImage();
+        }
+        image = new GreenfootImage(original);
+        double a = Math.sin(ticks) + 1.5d;
+        ticks++;
+        
+        image.scale((int)(image.getWidth() * a), (int)(image.getHeight() * a));
+        setImage(image);
+        
     }
 }
