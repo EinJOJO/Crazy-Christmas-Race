@@ -1,4 +1,3 @@
-import greenfoot.*;
 public class ButtonPause extends Button {
 
     public ButtonPause() {
