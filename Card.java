@@ -41,6 +41,12 @@ public class Card extends Actor{
         this.cardImage = cardImage;
     }
 
+
+    public GreenfootImage getCardImage() {
+        return cardImage;
+    }
+    
+
     public void toggle() {
         setVisible(!isVisible());
     };
