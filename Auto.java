@@ -3,7 +3,9 @@ import greenfoot.*;
 /**
  * Auto brummt brutulm.
  * @author Johannes
-
+ * 
+ * TODO:
+ * - Random Respawn Delay
  */
 public class Auto extends Actor
 {    
@@ -11,6 +13,8 @@ public class Auto extends Actor
     private final int speed;
     private final boolean drivingLeft;
     private boolean spawned = false; 
+    private int secureX = 0;
+    private int secureY = 0;
 
     /**
      * Konstruktor 1 von 2. Leere Parameter:
@@ -50,14 +54,14 @@ public class Auto extends Actor
     }
 
 
-    public boolean isSpawned() {
-        return spawned;
-    }
-
     public void act() 
     {
 
         if(!spawned) return;
+
+        secureX = getX();
+        secureY = getY();
+
         //Auto bewegen.
         if (drivingLeft) {
             setLocation(getX() - speed, getY());
@@ -78,15 +82,6 @@ public class Auto extends Actor
         
     }
 
-    
-    public boolean isDrivingLeft() {
-        return drivingLeft;
-    }
-
-    public boolean isBlue() {
-        return blue;
-    }
-
     public void spawn() {
         if (!spawned) {
             if (isBlue()) {
@@ -96,14 +91,44 @@ public class Auto extends Actor
             }
 
             spawned = true;
-
+            if (!getWorld().getObjects(null).contains(this)) {
+                getWorld().addObject(this, getSecureX(), getSecureY());
+            }
         }
     }
 
     public void despawn() {
         if (spawned) {
             spawned = false;
-            setImage(new GreenfootImage(1, 1));
+            getWorld().removeObject(this);
+            
         }
+    }
+
+    public boolean isDrivingLeft() {
+        return drivingLeft;
+    }
+
+    public boolean isBlue() {
+        return blue;
+    }
+    
+    public boolean isSpawned() {
+        return spawned;
+    }
+
+    /**
+     * Alternative to getX() method by actor which throws illegal state exception
+     * @return last X coordinate
+     */
+    public int getSecureX() {
+        return secureX;
+    }
+    /**
+     * Alternative to getY() method by actor which throws illegal state exception
+     * @return last Y coordinate
+     */
+    public int getSecureY() {
+        return secureY;
     }
 }
