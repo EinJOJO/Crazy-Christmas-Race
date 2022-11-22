@@ -46,7 +46,7 @@ public class Textbox extends Actor
         image.clear();
         image.setColor(getColor());
         image.setFont( new Font( "SANSERIF", true, false, fontSize ) );
-        image.drawString(text, 5, fontSize - 5);
+        image.drawString(text, 5, fontSize - 2);
         setImage(image);
     }
 }

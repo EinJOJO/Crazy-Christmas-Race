@@ -14,7 +14,7 @@ public class TextSplash extends Textbox {
     private List<String> splashes;
     public static TextSplash instance;
     private int ticks;
-    private int scale;
+
     private GreenfootImage original;
     long time;
 
@@ -55,41 +55,39 @@ public class TextSplash extends Textbox {
         } 
 
     }
-
     public static TextSplash getInstance() {
         if (instance == null) {
             instance = new TextSplash();
         }
         return instance;
     }
-
-    
     public void place() {
         String text = splashes.get(new Random().nextInt(splashes.size()));
+        setFontSize(12);
         setText(text);
+    
         original = null;
     }
 
     @Override
     public void act() {
-        if (time > System.currentTimeMillis()) {
+         if (time > System.currentTimeMillis()) {
             return;
         } else {
-            time = System.currentTimeMillis() + 100;
-        }
+            time = System.currentTimeMillis() + 40;
+        } 
 
 
-        GreenfootImage image;
         
+    
         if (original == null ) {
             original = getImage();
         }
+        GreenfootImage image;
         image = new GreenfootImage(original);
-        double a = Math.sin(ticks) + 1.5d;
-        ticks++;
-        
+        double a = (Math.sin(ticks) / 5 + 1.5d) / 4 + 1;
         image.scale((int)(image.getWidth() * a), (int)(image.getHeight() * a));
         setImage(image);
-        
+        ticks++;
     }
 }

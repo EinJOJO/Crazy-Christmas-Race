@@ -58,7 +58,7 @@ public class Winterwelt extends World
         addObject(counterSanta, 200, 580);
 
         counterRentier = new Zaehler("Punkte: ");
-        addObject(counterRentier, 780, 580);
+        addObject(counterRentier, 645, 580);
 
         spielerUndHausErstellen();
         autosErstellen();
