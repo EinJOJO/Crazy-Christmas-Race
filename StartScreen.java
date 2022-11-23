@@ -18,7 +18,7 @@ public class StartScreen extends World
     {    
         super(800, 600, 1); 
         textSplash = TextSplash.getInstance();
-        setPaintOrder(Card.class, Button.class);
+        setPaintOrder(Button.class);
         prepare();
         textSplash.place();
         textSplash.setRotation(-20);
