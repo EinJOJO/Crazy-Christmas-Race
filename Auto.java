@@ -91,16 +91,15 @@ public class Auto extends Actor
             }
 
             spawned = true;
-            if (!getWorld().getObjects(null).contains(this)) {
-                getWorld().addObject(this, getSecureX(), getSecureY());
-            }
+            
+            
         }
     }
 
     public void despawn() {
         if (spawned) {
             spawned = false;
-            getWorld().removeObject(this);
+            setImage(new GreenfootImage(1,1));
             
         }
     }

@@ -127,10 +127,10 @@ public class Winterwelt extends World
         //Reihe4
 
         //Reihe5
-        addObject(new Schlitten(),800,280);
+       addObject(new Schlitten(),800,280);
        addObject(new Schlitten(),550,170);
        addObject(new Schlitten(),300,170);
-
+    }
     @Override
     public void act() {
         if (Greenfoot.isKeyDown("escape")) {
@@ -150,8 +150,14 @@ public class Winterwelt extends World
      */
     private void prepare()
     {
-    public boolean isRunning() {
+        
+    }
+    
+    
+    public boolean isRunning()
+    {
         return running;
 
     }
+
 }
