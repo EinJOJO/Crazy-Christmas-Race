@@ -118,18 +118,24 @@ public class Winterwelt extends World
         addObject(new Schlitten(),0 ,65);
         
         //Reihe2
-        
+       addObject(new Schlitten(),545,110);
+       addObject(new Schlitten(),142,110);
+       addObject(new Schlitten(),729,110);
        
         //Reihe3
-       addObject(new Schlitten(),800,170);
-       addObject(new Schlitten(),550,170);
-       addObject(new Schlitten(),300,170);
+       addObject(new Schlitten(),800,160);
+       addObject(new Schlitten(),550,160);
+       addObject(new Schlitten(),300,160);
         //Reihe4
-
+       addObject(new Schlitten(),25,205);
+       addObject(new Schlitten(),666,205);
+       addObject(new Schlitten(),458,205);
+       
         //Reihe5
-       addObject(new Schlitten(),800,280);
-       addObject(new Schlitten(),550,170);
-       addObject(new Schlitten(),300,170);
+       addObject(new Schlitten(),750,250);
+       addObject(new Schlitten(),550,250);
+       addObject(new Schlitten(),300,250);
+       addObject(new Schlitten(),100,250);
     }
     @Override
     public void act() {
