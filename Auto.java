@@ -3,13 +3,18 @@ import greenfoot.*;
 /**
  * Auto brummt brutulm.
  * @author Johannes
-
+ * 
+ * TODO:
+ * - Random Respawn Delay
  */
 public class Auto extends Actor
 {    
     private final boolean blue;
     private final int speed;
     private final boolean drivingLeft;
+    private boolean spawned = false; 
+    private int secureX = 0;
+    private int secureY = 0;
 
     /**
      * Konstruktor 1 von 2. Leere Parameter:
@@ -19,6 +24,8 @@ public class Auto extends Actor
         this.blue = true;
         this.speed = 2;
         this.drivingLeft = false;
+
+        spawn();
     }
 
     /**
@@ -37,21 +44,24 @@ public class Auto extends Actor
         }
 
         //Textur setzten: Blaues oder Rotes Auto
-        if (autoBlau) {
-            setImage("car01.png");
-        } else {
-            setImage("car02.png");
-        }
+        
         
         //Durch die Symmetrie kann man die Autos einfach drehen.
         if (drivesToLeft) {
             setRotation(180);
         }
+        spawn();
     }
 
 
     public void act() 
     {
+
+        if(!spawned) return;
+
+        secureX = getX();
+        secureY = getY();
+
         //Auto bewegen.
         if (drivingLeft) {
             setLocation(getX() - speed, getY());
@@ -61,16 +71,40 @@ public class Auto extends Actor
 
         //Auto zurücksetzen
         if (isAtEdge()) {
+            despawn();
             if (drivingLeft) {
                 setLocation(getWorld().getWidth(), getY());
             } else {
                 setLocation(0, getY());
             }
+            spawn();
         }
         
     }
 
-    
+    public void spawn() {
+        if (!spawned) {
+            if (isBlue()) {
+                setImage("car01.png");
+            } else {
+                setImage("car02.png");
+            }
+
+            spawned = true;
+            if (!getWorld().getObjects(null).contains(this)) {
+                getWorld().addObject(this, getSecureX(), getSecureY());
+            }
+        }
+    }
+
+    public void despawn() {
+        if (spawned) {
+            spawned = false;
+            getWorld().removeObject(this);
+            
+        }
+    }
+
     public boolean isDrivingLeft() {
         return drivingLeft;
     }
@@ -78,9 +112,23 @@ public class Auto extends Actor
     public boolean isBlue() {
         return blue;
     }
+    
+    public boolean isSpawned() {
+        return spawned;
+    }
 
-    public void loescheMich()
-    {
-        getWorld().removeObject(this);
+    /**
+     * Alternative to getX() method by actor which throws illegal state exception
+     * @return last X coordinate
+     */
+    public int getSecureX() {
+        return secureX;
+    }
+    /**
+     * Alternative to getY() method by actor which throws illegal state exception
+     * @return last Y coordinate
+     */
+    public int getSecureY() {
+        return secureY;
     }
 }
