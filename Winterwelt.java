@@ -1,3 +1,5 @@
+import javax.sound.midi.Instrument;
+
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
@@ -10,6 +12,7 @@ public class Winterwelt extends World
     public static Zaehler counterRentier;
 
     private final Difficulty difficulty;
+    private boolean running = true;
 
     /**
      * How much speed on top to the base speed.
@@ -47,7 +50,7 @@ public class Winterwelt extends World
     private void setup() {
         GreenfootImage background = new GreenfootImage("Winterwelt.jpg");
         setBackground(background);
-        setPaintOrder(Santa.class, Rentier.class, Zaehler.class, Haus.class, Auto.class, Schlitten.class);
+        setPaintOrder(Card.class, Button.class ,Santa.class, Rentier.class, Zaehler.class, Haus.class, Auto.class, Schlitten.class);
 
         Greenfoot.setSpeed(50);
 
@@ -55,14 +58,20 @@ public class Winterwelt extends World
         addObject(counterSanta, 200, 580);
 
         counterRentier = new Zaehler("Punkte: ");
-        addObject(counterRentier, 780, 580);
+        addObject(counterRentier, 645, 580);
 
         spielerUndHausErstellen();
         autosErstellen();
     }
 
-    private void spielerUndHausErstellen()
 
+    public void setRunning(boolean running) {
+        this.running = running;
+    }
+
+    
+
+    private void spielerUndHausErstellen()
     {
         Santa santa = new Santa();
         addObject(santa,0,0);
@@ -97,10 +106,20 @@ public class Winterwelt extends World
         addObject(new Auto(),49,526);
     } 
 
-
+    @Override
+    public void act() {
+        if (Greenfoot.isKeyDown("escape")) {
+            setRunning(!isRunning());    
+            Greenfoot.setWorld(new StartScreen());
+        }
+        super.act();
+    }
 
     public Difficulty getDifficulty() {
         return difficulty;
     }
 
+    public boolean isRunning() {
+        return running;
+    }
 }
