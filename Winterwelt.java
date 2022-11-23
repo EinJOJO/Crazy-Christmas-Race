@@ -108,15 +108,19 @@ public class Winterwelt extends World
         addObject(new Schlitten(),220,65); 
         addObject(new Schlitten(),0 ,65);
         
-
         //Reihe2
-
+        
+       
         //Reihe3
-
+       addObject(new Schlitten(),800,170);
+       addObject(new Schlitten(),550,170);
+       addObject(new Schlitten(),300,170);
         //Reihe4
 
         //Reihe5
-
+        addObject(new Schlitten(),800,280);
+       addObject(new Schlitten(),550,170);
+       addObject(new Schlitten(),300,170);
     }
 
     public Difficulty getDifficulty() {
