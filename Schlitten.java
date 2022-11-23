@@ -11,15 +11,22 @@ public class Schlitten extends Actor
     private final int speed;
     private final boolean drivesToLeft;
     
+    
+    public Schlitten()
+    {
+        speed=3;
+        drivesToLeft=true;
+               
+    }
+    
     public Schlitten(int speed, boolean drivesToLeft)
     {
-        this.speed = 3;
+        this.speed = speed;
         this.drivesToLeft = drivesToLeft;
         if (drivesToLeft) {
-            setRotation(180);
-            setImage("Schlitten2");
+            setImage("Schlitten2.png");
         }   else    {
-            setImage("Schlitten");
+            setImage("Schlitten.png");
         }
     }
     
