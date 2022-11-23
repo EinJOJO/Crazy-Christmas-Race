@@ -37,6 +37,8 @@ public class Winterwelt extends World
         super(800, 600, 1); 
         this.difficulty = Difficulty.EASY;
         setup();
+
+        prepare();
     }
 
     public Winterwelt(Difficulty difficulty) {
@@ -58,6 +60,7 @@ public class Winterwelt extends World
         addObject(counterRentier, 780, 580);
 
         spielerUndHausErstellen();
+        schlittenErstellen();
         autosErstellen();
     }
 
@@ -97,10 +100,35 @@ public class Winterwelt extends World
         addObject(new Auto(),49,526);
     } 
 
+    public void schlittenErstellen()
+    {
+        //Reihe1 (von oben nach unten)
+        addObject(new Schlitten(),660,65);
+        addObject(new Schlitten(),440,65);
+        addObject(new Schlitten(),220,65); 
+        addObject(new Schlitten(),0 ,65);
+        
 
+        //Reihe2
+
+        //Reihe3
+
+        //Reihe4
+
+        //Reihe5
+
+    }
 
     public Difficulty getDifficulty() {
         return difficulty;
     }
 
+    /**
+     * Prepare the world for the start of the program.
+     * That is: create the initial objects and add them to the world.
+     */
+    private void prepare()
+    {
+        
+    }
 }
