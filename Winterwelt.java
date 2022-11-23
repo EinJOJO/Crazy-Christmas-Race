@@ -41,7 +41,7 @@ public class Winterwelt extends World
         this.difficulty = Difficulty.EASY;
         setup();
 
-        prepare();
+    
     }
 
     public Winterwelt(Difficulty difficulty) {
@@ -52,7 +52,7 @@ public class Winterwelt extends World
     private void setup() {
         GreenfootImage background = new GreenfootImage("Winterwelt.jpg");
         setBackground(background);
-        setPaintOrder(Card.class, Button.class ,Santa.class, Rentier.class, Zaehler.class, Haus.class, Auto.class, Schlitten.class);
+        setPaintOrder( Button.class ,Santa.class, Rentier.class, Zaehler.class, Haus.class, Auto.class, Schlitten.class);
 
         Greenfoot.setSpeed(50);
 
@@ -130,6 +130,7 @@ public class Winterwelt extends World
         addObject(new Schlitten(),800,280);
        addObject(new Schlitten(),550,170);
        addObject(new Schlitten(),300,170);
+    }
 
     @Override
     public void act() {
@@ -144,12 +145,6 @@ public class Winterwelt extends World
         return difficulty;
     }
 
-    /**
-     * Prepare the world for the start of the program.
-     * That is: create the initial objects and add them to the world.
-     */
-    private void prepare()
-    {
     public boolean isRunning() {
         return running;
 
