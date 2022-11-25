@@ -33,6 +33,7 @@ public class TextSplash extends Textbox {
         splashes = new ArrayList<>();
         if (!file.canRead()) {
             splashes.add("!file.canRead()");
+            Logger.getInstance().warn("Can not read splashes.txt");
             return;
         }
 
@@ -49,10 +50,14 @@ public class TextSplash extends Textbox {
                     //System.out.println(String.valueOf(splashes.size()) + " - " + line);
                 }
             } while(true);
+            Logger.getInstance().info(String.format("Loaded %d lines from splashes.txt", splashes.size()));
             reader.close();
         } catch (IOException e) {
             splashes.add("IOException");
+            Logger.getInstance().warn(e.getStackTrace());
         } 
+
+        
 
     }
     public static TextSplash getInstance() {

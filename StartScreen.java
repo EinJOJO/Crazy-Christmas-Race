@@ -9,6 +9,7 @@ public class StartScreen extends World
 {
 
     TextSplash textSplash;
+    Textbox textbox;
 
     /**
      * Constructor for objects of class StartScreen.
@@ -19,14 +20,35 @@ public class StartScreen extends World
         super(800, 600, 1); 
         textSplash = TextSplash.getInstance();
         setPaintOrder(Button.class);
-        prepare();
+        
         textSplash.place();
         textSplash.setRotation(-20);
+
+        textbox = new Textbox();
+        
+        prepare();
     }
 
     @Override
     public void act() {    
+        if (Greenfoot.getKey() == "f3") {
+            Logger logger = Logger.getInstance();
+            
+            logger.setPrintLogs(!logger.isPrintLogs());
+
+            if (logger.isPrintLogs()) {
+                textbox.setText("Enabled logger printing.");
+                System.out.println("Enabled logger printing");
+            } else {
+                textbox.setText("Disabled logger printing.");
+            };
+
+
+        }
+        
         super.act();
+
+       
     }
 
     public void loadButtons() {
@@ -40,6 +62,7 @@ public class StartScreen extends World
     private void prepare()
     {
 
+        addObject(textbox, 100, 400);
 
         addObject(textSplash, 565, 455);
 

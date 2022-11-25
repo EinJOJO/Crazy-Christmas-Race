@@ -13,8 +13,6 @@ public class Auto extends Actor
     private final int speed;
     private final boolean drivingLeft;
     private boolean spawned = false; 
-    private int secureX = 0;
-    private int secureY = 0;
 
     /**
      * Konstruktor 1 von 2. Leere Parameter:
@@ -24,7 +22,6 @@ public class Auto extends Actor
         this.blue = true;
         this.speed = 2;
         this.drivingLeft = false;
-
         spawn();
     }
 
@@ -37,15 +34,7 @@ public class Auto extends Actor
         this.speed = speed;
         this.blue = autoBlau;
         this.drivingLeft = drivesToLeft;
-
-        if (speed <= 0) {
-            getWorld().removeObject(this);
-            return;
-        }
-
-        //Textur setzten: Blaues oder Rotes Auto
-        
-        
+    
         //Durch die Symmetrie kann man die Autos einfach drehen.
         if (drivesToLeft) {
             setRotation(180);
@@ -58,9 +47,6 @@ public class Auto extends Actor
     {
 
         if(!spawned) return;
-
-        secureX = getX();
-        secureY = getY();
 
         //Auto bewegen.
         if (drivingLeft) {
@@ -91,8 +77,6 @@ public class Auto extends Actor
             }
 
             spawned = true;
-            
-            
         }
     }
 
@@ -116,18 +100,10 @@ public class Auto extends Actor
         return spawned;
     }
 
-    /**
-     * Alternative to getX() method by actor which throws illegal state exception
-     * @return last X coordinate
-     */
-    public int getSecureX() {
-        return secureX;
+    public boolean isTouchingCar() {
+        return !getIntersectingObjects(Auto.class).isEmpty();
     }
-    /**
-     * Alternative to getY() method by actor which throws illegal state exception
-     * @return last Y coordinate
-     */
-    public int getSecureY() {
-        return secureY;
+    public int getSpeed() {
+        return speed;
     }
 }

@@ -1,12 +1,10 @@
 
-import java.util.List;
-
 import greenfoot.*;
 
 /**
  * Die Eigenschaften des Spielers
  */
-public class Player extends Actor {
+public abstract class Player extends Actor {
  
     /*
      * Index:
@@ -36,37 +34,31 @@ public class Player extends Actor {
         this.spawnX = spawnX;
         this.spawnY = spawnY;
         this.pointsCounter = pointsCounter;
+        Logger.getInstance().info("Created Player Object of " + getName());
     }
 
     //Implementieren
     @Override
     public void act() {
-        handleInput();
+        
+        handleInput();    
+        
+        if (isTouchingCar()) {
+            respawn();
+        }
             
-        if (isTouchingHouse())
-        {
-            pointsCounter.erhoehe();
-            
+        if (isTouchingHouse()){
+            pointsCounter.erhoehe(); 
         }    
-        //Wird das Haus berührt?    
-        if (isOnIce())
-        {
-            respawn();
-        }
-        //Wird Eis berührt?
-        if (isTouchingCar())
-        {
-            respawn();
-        }
-        //Wird ein Auto berührt?
-       
-         
-        if(isOnSlide())
-        {
+        
+        if(isOnSlide()){
             driveOnSlide();
         }
-        
-        
+
+        if (isOnIce()){
+            respawn();
+        }
+      
         
     }
     
@@ -77,6 +69,8 @@ public class Player extends Actor {
 
     
     private void handleInput () {
+        int oldX = getX();
+        int oldY = getY();
         if (Greenfoot.isKeyDown(controlKeys[0])) { 
             setLocation(getX() , getY() - speed);
             
@@ -89,6 +83,16 @@ public class Player extends Actor {
         }
         if (Greenfoot.isKeyDown(controlKeys[3])) { 
             setLocation(getX() + speed, getY());
+        }
+
+        if (isTouchingCar()) {
+            Auto car = (Auto) getOneIntersectingObject(Auto.class);
+            if (car != null ){
+                if (car.getSpeed() == 0) {
+                    setLocation(oldX, oldY);
+                }
+            }
+            
         }
 
     }
@@ -138,6 +142,7 @@ public class Player extends Actor {
     }
 
     public void driveOnSlide() {
+        if (!isOnSlide()) return;
         Schlitten schlitten = (Schlitten) getOneIntersectingObject(Schlitten.class);
         if (schlitten == null) {
             return;
@@ -149,8 +154,8 @@ public class Player extends Actor {
         }   else {
             setLocation(getX() + speed, getY());
         }
-        
-
     }
+
+    public abstract String getName();
     
 }

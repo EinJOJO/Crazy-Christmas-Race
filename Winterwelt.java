@@ -19,14 +19,16 @@ public class Winterwelt extends World
      * How much speed on top to the base speed.
      */
     public enum Difficulty {
-        EASY(-1),
-        NORMAL(0),
-        HARD(1),
-        CHALLENGING(2); 
+        EASY(-1, 0),
+        NORMAL(0 , 1),
+        HARD(1,  2),
+        CHALLENGING(2, 3); 
 
         public final int summand;
-        private Difficulty(int summand) {
+        public final int index;
+        private Difficulty(int summand, int index) {
             this.summand = summand;
+            this.index = index;
         }
     }
 
@@ -40,13 +42,13 @@ public class Winterwelt extends World
         super(800, 600, 1); 
         this.difficulty = Difficulty.EASY;
         setup();
-
-        prepare();
     }
 
     public Winterwelt(Difficulty difficulty) {
         super(800, 600, 1); 
         this.difficulty = difficulty;
+
+        setup();
     }
 
     private void setup() {
@@ -61,6 +63,9 @@ public class Winterwelt extends World
 
         counterRentier = new Zaehler("Punkte: ");
         addObject(counterRentier, 645, 580);
+
+        ButtonDifficulty buttonDifficulty = new ButtonDifficulty(difficulty);
+        addObject(buttonDifficulty, 763, 17);
 
         spielerUndHausErstellen();
         schlittenErstellen();
@@ -90,20 +95,19 @@ public class Winterwelt extends World
     }
 
     private void spawnRandomCars() {
-        int[] yLevels = new int[]{328, 374, 423, 475};
-        for (int i = 0; i < 4; i++) {
-            int y = yLevels[i];
-            int speed = i + getDifficulty().summand + 1;
-            int carsCount = random.nextInt(4) + 1;
-
-            boolean drivingLeft = random.nextBoolean();
+        int[] yLevels = new int[]{328, 374, 423, 475, 526}; // Reihe 1, 2, 3 etc.
+        for (int i = 0; i < yLevels.length; i++) { //"Für jede Reihe..."
+            int y = yLevels[i]; //Höhe der Reihe
+            int speed = random.nextInt(5) + getDifficulty().summand + 1; // Speed = Reihe + Difficulty Geschwindigkeit + 1.
+            int carsCount = random.nextInt(4) + 1; // Anzahl der Autos.
+            boolean drivingLeft = random.nextBoolean(); // Richtung. 
             
             for (int j = 0; j < carsCount; j++) {
                 Auto auto = new Auto(speed, random.nextBoolean(), drivingLeft);
-                int x = random.nextInt(getWidth());
+                int x = random.nextInt(getWidth() - 50);
                 addObject(auto, x, y);
                 if (auto.isTouchingCar()) {
-                    i--;
+                    j--;
                     removeObject(auto);
                     continue;
                 }
@@ -152,15 +156,9 @@ public class Winterwelt extends World
     public Difficulty getDifficulty() {
         return difficulty;
     }
+  
 
-    /**
-     * Prepare the world for the start of the program.
-     * That is: create the initial objects and add them to the world.
-     */
-    private void prepare()
-    {
-        
-    }
+
     
     
     public boolean isRunning()
