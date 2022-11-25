@@ -1,3 +1,5 @@
+import java.util.Random;
+
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
@@ -11,13 +13,13 @@ public class Winterwelt extends World
 
     private final Difficulty difficulty;
     private boolean running = true;
+    Random random = new Random();
 
     /**
      * How much speed on top to the base speed.
      */
     public enum Difficulty {
-        NOOB(-2),
-        EASY(1),
+        EASY(-1),
         NORMAL(0),
         HARD(1),
         CHALLENGING(2); 
@@ -62,7 +64,7 @@ public class Winterwelt extends World
 
         spielerUndHausErstellen();
         schlittenErstellen();
-        autosErstellen();
+        spawnRandomCars();
     }
 
 
@@ -87,25 +89,27 @@ public class Winterwelt extends World
 
     }
 
-    private void autosErstellen() {
-        //Reihe 1
-        int speed1 = 2 + getDifficulty().summand;
-        addObject(new Auto(speed1, false, false),138, 328);
-        addObject(new Auto(speed1, true, false),418, 328);
-        addObject(new Auto(speed1, false, false),700, 328);
-        //Reihe 2
-        addObject(new Auto(4, true, true),41,374);
-        addObject(new Auto(4, false, true),400,374);
-        addObject(new Auto(4, false, true),494,374);
-        //Reihe 3
-        addObject(new Auto(3, false, true),275,423);
-        addObject(new Auto(3, true, true),670,423);
-        // Reihe 4
-        addObject(new Auto(4, true, true),114,475);
-        addObject(new Auto(4, true, true),423,475);
+    private void spawnRandomCars() {
+        int[] yLevels = new int[]{328, 374, 423, 475};
+        for (int i = 0; i < 4; i++) {
+            int y = yLevels[i];
+            int speed = i + getDifficulty().summand + 1;
+            int carsCount = random.nextInt(4) + 1;
 
-        addObject(new Auto(),49,526);
-    } 
+            boolean drivingLeft = random.nextBoolean();
+            
+            for (int j = 0; j < carsCount; j++) {
+                Auto auto = new Auto(speed, random.nextBoolean(), drivingLeft);
+                int x = random.nextInt(getWidth());
+                addObject(auto, x, y);
+                if (auto.isTouchingCar()) {
+                    i--;
+                    removeObject(auto);
+                    continue;
+                }
+            }
+        }
+    }
 
     public void schlittenErstellen()
     {
