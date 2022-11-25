@@ -20,7 +20,7 @@ public class Winterwelt extends World
         EASY(1),
         NORMAL(0),
         HARD(1),
-        CHALLENGING(2);
+        CHALLENGING(2); 
 
         public final int summand;
         private Difficulty(int summand) {
@@ -90,9 +90,9 @@ public class Winterwelt extends World
     private void autosErstellen() {
         //Reihe 1
         int speed1 = 2 + getDifficulty().summand;
-        addObject(new Auto(speed1, false, false),138, 322);
-        addObject(new Auto(speed1, true, false),418, 322);
-        addObject(new Auto(speed1, false, false),700, 322);
+        addObject(new Auto(speed1, false, false),138, 328);
+        addObject(new Auto(speed1, true, false),418, 328);
+        addObject(new Auto(speed1, false, false),700, 328);
         //Reihe 2
         addObject(new Auto(4, true, true),41,374);
         addObject(new Auto(4, false, true),400,374);
@@ -110,31 +110,32 @@ public class Winterwelt extends World
     public void schlittenErstellen()
     {
         //Reihe1 (von oben nach unten)
-        addObject(new Schlitten(),660,65);
-        addObject(new Schlitten(),440,65);
-        addObject(new Schlitten(),220,65); 
-        addObject(new Schlitten(),0 ,65);
+        addObject(new Schlitten(3,true),660,65);
+        addObject(new Schlitten(3,true),440,65);
+        addObject(new Schlitten(3,true),220,65); 
+        addObject(new Schlitten(3,true),53 ,65);
         
         //Reihe2
-       addObject(new Schlitten(),545,110);
-       addObject(new Schlitten(),142,110);
-       addObject(new Schlitten(),729,110);
+       addObject(new Schlitten(3,false),366,110);
+       addObject(new Schlitten(3,false),142,110);
+       addObject(new Schlitten(3,false),729,110);
        
         //Reihe3
-       addObject(new Schlitten(),800,160);
-       addObject(new Schlitten(),550,160);
-       addObject(new Schlitten(),300,160);
+       addObject(new Schlitten(3,true),800,160);
+       addObject(new Schlitten(3,true),550,160);
+       addObject(new Schlitten(3,true),300,160);
         //Reihe4
-       addObject(new Schlitten(),25,205);
-       addObject(new Schlitten(),666,205);
-       addObject(new Schlitten(),458,205);
+       addObject(new Schlitten(3,false),25,205);
+       addObject(new Schlitten(3,false),666,205);
+       addObject(new Schlitten(3,false),458,205);
        
         //Reihe5
-       addObject(new Schlitten(),750,250);
-       addObject(new Schlitten(),550,250);
-       addObject(new Schlitten(),300,250);
-       addObject(new Schlitten(),100,250);
+       addObject(new Schlitten(3,true),750,250);
+       addObject(new Schlitten(3,true),550,250);
+       addObject(new Schlitten(3,true),300,250);
+       addObject(new Schlitten(3,true),100,250);
     }
+    
     @Override
     public void act() {
         if (Greenfoot.isKeyDown("escape")) {

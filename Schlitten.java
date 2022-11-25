@@ -15,7 +15,7 @@ public class Schlitten extends Actor
     public Schlitten()
     {
         speed=3;
-        drivesToLeft=true;
+        drivesToLeft=false;
                
     }
     
@@ -36,22 +36,13 @@ public class Schlitten extends Actor
      */
     public void act() 
     {
-        if (isAtEdge())
-        {
-            
-            setLocation(0, getY());
-
-        }
-            
         
-        if (drivesToLeft) {
-            setLocation(getX() - speed, getY());
-        } else {
-            setLocation(getX() + speed, getY());
-        }
+        
+        
         if (isAtEdge()) {
             if (drivesToLeft) {
                 setLocation(getWorld().getWidth(), getY());
+                
             } else {
                 setLocation(0, getY());
             }
@@ -64,13 +55,6 @@ public class Schlitten extends Actor
             setLocation(getX() + speed, getY());
         }
         
-        if (isAtEdge()) {
-            if (drivesToLeft) {
-                setLocation(getWorld().getWidth(), getY());
-            } else {
-                setLocation(0, getY());
-            }
-        }
         // Der Schlitten soll sich bewegen und aus der Welt gelöscht werden, wenn er
         // bis zum anderen Rand gefahren ist
     }
