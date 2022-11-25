@@ -1,4 +1,6 @@
 
+import java.util.List;
+
 import greenfoot.*;
 
 /**
@@ -61,7 +63,7 @@ public class Player extends Actor {
          
         if(isOnSlide())
         {
-                    
+            driveOnSlide();
         }
         
         
@@ -133,6 +135,22 @@ public class Player extends Actor {
      */
     public boolean isOnSlide() {
         return getIntersectingObjects(Schlitten.class).size() > 0;
+    }
+
+    public void driveOnSlide() {
+        Schlitten schlitten = (Schlitten) getOneIntersectingObject(Schlitten.class);
+        if (schlitten == null) {
+            return;
+        }
+
+        int speed = schlitten.getSpeed();
+        if (schlitten.isDrivingToLeft()) { 
+            setLocation(getX() - speed, getY());
+        }   else {
+            setLocation(getX() + speed, getY());
+        }
+        
+
     }
     
 }

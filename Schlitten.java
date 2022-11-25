@@ -9,20 +9,20 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class Schlitten extends Actor
 {
     private final int speed;
-    private final boolean drivesToLeft;
+    private final boolean drivingToLeft;
     
     
     public Schlitten()
     {
         speed=3;
-        drivesToLeft=false;
+        drivingToLeft=false;
                
     }
     
     public Schlitten(int speed, boolean drivesToLeft)
     {
         this.speed = speed;
-        this.drivesToLeft = drivesToLeft;
+        this.drivingToLeft = drivesToLeft;
         if (drivesToLeft) {
             setImage("Schlitten2.png");
         }   else    {
@@ -40,7 +40,7 @@ public class Schlitten extends Actor
         
         
         if (isAtEdge()) {
-            if (drivesToLeft) {
+            if (drivingToLeft) {
                 setLocation(getWorld().getWidth(), getY());
                 
             } else {
@@ -49,7 +49,7 @@ public class Schlitten extends Actor
         }
         
         World world = getWorld();
-        if (drivesToLeft) {
+        if (drivingToLeft) {
             setLocation(getX() - speed, getY());
         } else {
             setLocation(getX() + speed, getY());
@@ -59,11 +59,10 @@ public class Schlitten extends Actor
         // bis zum anderen Rand gefahren ist
     }
 
-    public void aufSchlittenFahren()
-    {
-        Schlitten schlitten= (Schlitten)getIntersectingObjects(Schlitten.class).get(0);
-        setLocation(getX()+schlitten.getSpeed(),   getY());
+    public boolean isDrivingToLeft() {
+        return drivingToLeft;
     }
+
     
     public void loescheMich()
     {
