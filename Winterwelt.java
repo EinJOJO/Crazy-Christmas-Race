@@ -1,5 +1,3 @@
-import javax.sound.midi.Instrument;
-
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
