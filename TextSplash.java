@@ -46,7 +46,7 @@ public class TextSplash extends Textbox {
                     break;
                 } else {
                     splashes.add(line);
-                    System.out.println(String.valueOf(splashes.size()) + " - " + line);
+                    //System.out.println(String.valueOf(splashes.size()) + " - " + line);
                 }
             } while(true);
             reader.close();
