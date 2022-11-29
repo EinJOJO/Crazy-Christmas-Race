@@ -10,6 +10,7 @@ public class Schlitten extends Actor
 {
     private final int speed;
     private final boolean drivingToLeft;
+    private int respawnProgress = -1;
     
     
     public Schlitten()
@@ -31,18 +32,43 @@ public class Schlitten extends Actor
     
     public void act() 
     {
+        if (respawnProgress != -1) {
+            respawnWithFading();
+            return;
+        }
         if (drivingToLeft) {
             setLocation(getX() - speed, getY());
         } else {
             setLocation(getX() + speed, getY());
         }
         if (isAtEdge()) {
+            if (respawnProgress >= 20 || respawnProgress == -1) {
+                respawnProgress = 0;
+            }
+        }
+    }
+
+    public void respawnWithFading() {
+        GreenfootImage image = getImage();
+        int cOpacity = image.getTransparency();
+        if (respawnProgress < 10) {
+            image.setTransparency(cOpacity - 25);
+            respawnProgress++;
+            return;
+        } 
+        if (respawnProgress == 10) {
             if (drivingToLeft) {
                 setLocation(getWorld().getWidth(), getY());
             } else {
                 setLocation(0, getY());
             }
         }
+        if (respawnProgress < 20) {
+            image.setTransparency(cOpacity + 25);
+            respawnProgress++;
+            return;
+        }
+        respawnProgress = -1;
     }
 
     public boolean isDrivingToLeft() {

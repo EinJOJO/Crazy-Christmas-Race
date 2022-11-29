@@ -99,7 +99,7 @@ public class Winterwelt extends World
         for (int i = 0; i < yLevels.length; i++) { //"Für jede Reihe..."
             int y = yLevels[i]; //Höhe der Reihe
             int speed = random.nextInt(5) + getDifficulty().summand + 1; // Speed = Reihe + Difficulty Geschwindigkeit + 1.
-            int carsCount = random.nextInt(4) + 1; // Anzahl der Autos.
+            int carsCount = random.nextInt(3) + 1 + getDifficulty().summand; // Anzahl der Autos.
             boolean drivingLeft = random.nextBoolean(); // Richtung. 
             
             for (int j = 0; j < carsCount; j++) {
