@@ -1,4 +1,4 @@
-    import java.util.Random;
+        import java.util.Random;
 
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
@@ -68,7 +68,7 @@ public class Winterwelt extends World
         addObject(buttonDifficulty, 763, 17);
 
         spielerUndHausErstellen();
-        schlittenErstellen();
+        schlittenZufaelligErstellen();
         spawnRandomCars();
     }
 
@@ -111,39 +111,39 @@ public class Winterwelt extends World
                     removeObject(auto);
                     continue;
                 }
+                
             }
         }
     }
 
-    public void schlittenErstellen()
+    public void schlittenZufaelligErstellen()
     {
-        //Reihe1 (von oben nach unten)
-        addObject(new Schlitten(3,true),660,65);
-        addObject(new Schlitten(3,true),440,65);
-        addObject(new Schlitten(3,true),220,65); 
-        addObject(new Schlitten(3,true),53 ,65);
-        
-        //Reihe2
-       addObject(new Schlitten(3,false),366,110);
-       addObject(new Schlitten(3,false),142,110);
-       addObject(new Schlitten(3,false),729,110);
+        int[] yLevels = new int[]{65, 110, 160, 205, 250}; // Reihe 1, 2, 3 etc.
+       for (int i = 0; i < yLevels.length; i++) { //"Für jede Reihe..." // - von sebastian: tut sie aber nicht. die autos sid in einer reihe teilweise nicht existent (auf einer hoehe) und fahren teils auch nicht
+            int y = yLevels[i]; //Höhe der Reihe
+            int speed = random.nextInt(4) + 2 + getDifficulty().summand; // Speed = Reihe + Difficulty Geschwindigkeit + 1.
+            int schlittenCount = random.nextInt(3) + 1 - getDifficulty().summand; // Anzahl der Schlitten.
+            schlittenRichtung = !schlittenRichtung;
+            boolean drivingLeft = schlittenRichtung;
+            
+            for (int j = 0; j < schlittenCount; j++) {
+                Schlitten schlitten = new Schlitten(speed, drivingLeft);
+                int x = random.nextInt(getWidth() - 50);
+                addObject(schlitten, x, y);
+                
+                if (schlitten.isOnSlide()) {
+                    j--;    
+                    removeObject(schlitten);
+                    continue;
+                    
+                }
+                
+            }
+            
+       }
        
-        //Reihe3
-       addObject(new Schlitten(3,true),800,160);
-       addObject(new Schlitten(3,true),550,160);
-       addObject(new Schlitten(3,true),300,160);
-        //Reihe4
-       addObject(new Schlitten(3,false),25,205);
-       addObject(new Schlitten(3,false),666,205);
-       addObject(new Schlitten(3,false),458,205);
-       
-        //Reihe5
-       addObject(new Schlitten(3,true),750,250);
-       addObject(new Schlitten(3,true),550,250);
-       addObject(new Schlitten(3,true),300,250);
-       addObject(new Schlitten(3,true),100,250);
     }
-    
+    public boolean schlittenRichtung = false;
     @Override
     public void act() {
         if (Greenfoot.isKeyDown("escape")) {

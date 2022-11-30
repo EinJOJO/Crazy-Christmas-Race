@@ -75,6 +75,11 @@ public class Schlitten extends Actor
         
     }
 
+    public boolean isOnSlide() {
+        
+        return !getIntersectingObjects(Schlitten.class).isEmpty();
+    }
+    
     public boolean isDrivingToLeft() {
         return drivingToLeft;
         
