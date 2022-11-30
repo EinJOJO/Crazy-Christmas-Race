@@ -48,7 +48,8 @@ public abstract class Player extends Actor {
         }
             
         if (isTouchingHouse()){
-            pointsCounter.erhoehe(); 
+            pointsCounter.erhoehe();
+            respawn();
         }    
         
         if(isOnSlide()){
