@@ -96,7 +96,7 @@ public class Winterwelt extends World
 
     private void spawnRandomCars() {
         int[] yLevels = new int[]{328, 374, 423, 475, 526}; // Reihe 1, 2, 3 etc.
-        for (int i = 0; i < yLevels.length; i++) { //"Für jede Reihe..."
+        for (int i = 0; i < yLevels.length; i++) { //"Für jede Reihe..." // - von sebastian: tut sie aber nicht. die autos sid in einer reihe teilweise nicht existent (auf einer hoehe) und fahren teils auch nicht
             int y = yLevels[i]; //Höhe der Reihe
             int speed = random.nextInt(5) + getDifficulty().summand + 1; // Speed = Reihe + Difficulty Geschwindigkeit + 1.
             int carsCount = random.nextInt(3) + 1 + getDifficulty().summand; // Anzahl der Autos.
