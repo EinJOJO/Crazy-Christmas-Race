@@ -103,6 +103,7 @@ public class Auto extends Actor
     public boolean isTouchingCar() {
         return !getIntersectingObjects(Auto.class).isEmpty();
     }
+    
     public int getSpeed() {
         return speed;
     }

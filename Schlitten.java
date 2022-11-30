@@ -17,6 +17,7 @@ public class Schlitten extends Actor
     {
         speed=3;
         drivingToLeft=false;
+        
     }
     
     public Schlitten(int speed, boolean drivesToLeft)
@@ -28,6 +29,7 @@ public class Schlitten extends Actor
         }   else    {
             setImage("Schlitten.png");
         }
+        
     }
     
     public void act() 
@@ -46,6 +48,7 @@ public class Schlitten extends Actor
                 respawnProgress = 0;
             }
         }
+        
     }
 
     public void respawnWithFading() {
@@ -69,10 +72,12 @@ public class Schlitten extends Actor
             return;
         }
         respawnProgress = -1;
+        
     }
 
     public boolean isDrivingToLeft() {
         return drivingToLeft;
+        
     }
 
     // Diese Methode teilt dem aufrufenden Objekt mit, welche Geschwindigkeit der Schlitten hat
@@ -80,5 +85,6 @@ public class Schlitten extends Actor
     public int getSpeed()
     {
         return speed;
+        
     }
 }
