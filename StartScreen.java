@@ -25,6 +25,7 @@ public class StartScreen extends World
         textSplash.setRotation(-20);
 
         textbox = new Textbox();
+        setBackground("ScreenStart.png");
         
         prepare();
     }
