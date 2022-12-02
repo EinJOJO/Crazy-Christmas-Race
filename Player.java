@@ -30,7 +30,7 @@ public abstract class Player extends Actor {
             throw new Error("Parameter controlKeys ungültig.");
         }
         this.controlKeys = controlKeys;
-        this.speed = 2;
+        this.speed = 4;
         this.spawnX = spawnX;
         this.spawnY = spawnY;
         this.pointsCounter = pointsCounter;
@@ -127,11 +127,12 @@ public abstract class Player extends Actor {
      */
     public boolean isTouchingCar()
     {
-        Actor a = getOneIntersectingObject(Auto.class);
-        if ( a != null) {
+        //Actor a = getOneIntersectingObject(Auto.class);
+        return this.isTouching(Auto.class);
+        /* if ( a != null) {
             return ((Auto) a).isSpawned();
         };
-        return false;
+        return false; */
     }
 
     /**
@@ -139,7 +140,8 @@ public abstract class Player extends Actor {
      * @return Ob das Objekt auf einem Schlitten ist.
      */
     public boolean isOnSlide() {
-        return getIntersectingObjects(Schlitten.class).size() > 0;
+        //return getIntersectingObjects(Schlitten.class).size() > 0;
+        return isTouching(Schlitten.class);
     }
 
     public void driveOnSlide() {
