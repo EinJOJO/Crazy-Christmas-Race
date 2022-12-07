@@ -8,33 +8,23 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Schneeball extends Actor
 {
-    int speed;
-    float rotation; 
-    Player werfer;
+    private final int speed;
+    
+    public Schneeball(int speed) {
+        this.speed = speed;
+    }
+    
+    private Player werfer;
+    
+    
     public void act() 
     {
-        // Add your action code here.
+        bewegen();
     }
     
     public void bewegen( ) {
-        y = getY() + Math.cos(_a_);
+        setLocation(getX() + speed, getY() + speed);
     }
     
-    
-    public boolean werferSanta()
-    {
-            if (Greenfoot.isKeyDown(controlKeys[0]&&Greenfoot.isSpacebardown)) { 
 
-                getY(getObjectsInRange(_radius_, _cls_));
-                return getIntersectingObjects(Santa.class).size() > 0;
-        
-            }
-        }
-           
-        
-    public boolean werferRentier()
-    {
-        return getIntersectingObjects(Rentier.class).size() > 0;
-    }
-            
-        }
+}
