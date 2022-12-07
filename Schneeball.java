@@ -17,7 +17,7 @@ public class Schneeball extends Actor
     }
     
     public void bewegen( ) {
-        y = getY() + Math.cos(_a_)
+        y = getY() + Math.cos(_a_);
     }
     
     
