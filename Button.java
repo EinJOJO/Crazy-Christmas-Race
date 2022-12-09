@@ -92,7 +92,7 @@ public abstract class Button extends Actor
         
         setImage(image);
     }
-
+    
     /**
      * Damit das Hovern möglich ist, muss der Knopf wissen,
      * wo die Ursprüngliche Position war.

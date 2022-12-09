@@ -54,24 +54,31 @@ public class Schlitten extends Actor
     public void respawnWithFading() {
         GreenfootImage image = getImage();
         int cOpacity = image.getTransparency();
-        if (respawnProgress < 10) {
-            image.setTransparency(cOpacity - 25);
-            respawnProgress++;
-            return;
-        } 
-        if (respawnProgress == 10) {
-            if (drivingToLeft) {
-                setLocation(getWorld().getWidth(), getY());
-            } else {
-                setLocation(0, getY());
+        try {
+            if (respawnProgress < 5) {
+                image.setTransparency(cOpacity - 255 / 5);
+                respawnProgress++;
+                return;
+            } 
+            if (respawnProgress == 5) {
+                if (drivingToLeft) {
+                    setLocation(getWorld().getWidth(), getY());
+                } else {
+                    setLocation(0, getY());
+                }
             }
+            if (respawnProgress < 15) {
+                image.setTransparency(cOpacity + 25);
+                respawnProgress++;
+                return;
+            }
+            respawnProgress = -1;
+        } catch(IllegalArgumentException e){
+            image.setTransparency(255);
+            respawnProgress = -1;
         }
-        if (respawnProgress < 20) {
-            image.setTransparency(cOpacity + 25);
-            respawnProgress++;
-            return;
-        }
-        respawnProgress = -1;
+        
+        
         
     }
 
