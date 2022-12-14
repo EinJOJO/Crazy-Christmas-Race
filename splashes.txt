@@ -3,12 +3,7 @@ Imagine man hat eine 4
 "Lucian hat in meine Möhre gebissen"
 Imagine Schule hätte Internet...
 Gesamtschule kann sowas nicht.
-"String ist wie int nur anders."
-"Ich muss jetzt los. Die Schaukel wird frei."
-"Ich kann schnell rennen - habe 3 Beine."
-"Bück dich, Fee. Wunsch ist Wunsch."
-"Ist eine Witwe mit ihrem Mann...oh."
-"Manfred kann durch 0 teilen."
-"Lukas kennt die letzte p-Ziffer."
-"Habe Bodyguard. Ich beschütze sie."
-""
+"String ist wie int nur anders." ~ TI
+Ist eine Witwe mit ihrem Mann...oh.
+Manfred kann durch 0 teilen.
+Lukas kennt die Ziffer von PI.
