@@ -8,23 +8,29 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Schneeball extends Actor
 {
-    private final int speed;
-    
-    public Schneeball(int speed) {
-        this.speed = speed;
-    }
-    
-    private Player werfer;
+    int speed;
+    float rotation; 
+    Player werfer;
     
     
     public void act() 
     {
-        bewegen();
+        // Add your action code here.
     }
     
-    public void bewegen( ) {
-        setLocation(getX() + speed, getY() + speed);
-    }
+  
+    //public boolean werferSanta()
+    //ist Santa der Werfer des Schneeballs?
     
-
+           
+        
+    //public boolean werferRentier()
+    //{
+        //return getIntersectingObjects(Rentier.class).size() > 0;
+    //}
+    //ist das Rentier der Werfer des Schneeballs?
+    //wird ein Spieler getroffen?
+    // -> zurück auf startposition
+    //wird ein autop getroffen? --> speed=0
+    
 }
