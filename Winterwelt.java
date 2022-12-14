@@ -40,7 +40,7 @@ public class Winterwelt extends World
     {    
         // Erstelle eine Welt mit 600x400 Zellen und einer Zellgröße von 1x1 Pixeln.
         super(800, 600, 1); 
-        this.difficulty = Difficulty.EASY;
+        this.difficulty = Difficulty.NORMAL;
         setup();
     }
 
@@ -66,10 +66,14 @@ public class Winterwelt extends World
 
         ButtonDifficulty buttonDifficulty = new ButtonDifficulty(difficulty);
         addObject(buttonDifficulty, 763, 17);
-
         spielerUndHausErstellen();
-        schlittenZufaelligErstellen();
-        spawnRandomCars();
+        
+        new Timer().scheduleTask(()-> {
+           schlittenZufaelligErstellen();
+           spawnRandomCars();
+        }, 0);
+        
+
     }
 
 
@@ -95,6 +99,7 @@ public class Winterwelt extends World
     }
 
     private void spawnRandomCars() {
+
         int[] yLevels = new int[]{328, 374, 423, 475, 526}; // Reihe 1, 2, 3 etc.
         for (int i = 0; i < yLevels.length; i++) { //"Für jede Reihe..." // - von sebastian: tut sie aber nicht. die autos sid in einer reihe teilweise nicht existent (auf einer hoehe) und fahren teils auch nicht
             int y = yLevels[i]; //Höhe der Reihe

@@ -1,3 +1,5 @@
+import java.util.Random;
+
 import greenfoot.*;
 
 /**
@@ -63,7 +65,17 @@ public class Auto extends Actor
             } else {
                 setLocation(0, getY());
             }
-            spawn();
+            new Timer().scheduleTask(() -> {
+                spawn();
+                while (isTouchingCar()) {
+                    despawn();
+                    Greenfoot.delay(1);
+                    
+                }
+                if (!spawned) {
+                    spawn();
+                }
+            }, 10 * new Random().nextInt(200));
         }
         
         if (wirdSchneeballBeruehrt()){
@@ -102,7 +114,6 @@ public class Auto extends Actor
         if (spawned) {
             spawned = false;
             setImage(new GreenfootImage(1,1));
-            
         }
     }
 

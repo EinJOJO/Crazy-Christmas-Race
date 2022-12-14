@@ -22,6 +22,8 @@ public class Timer
         return running;
     }
     
+    
+    
     /**
      * Setze den Startzeitpunkt.
      */
@@ -54,6 +56,15 @@ public class Timer
         running = false;
     }
     
+
+    public void scheduleTask(Task task) {
+        new AsyncTimerThread(task, this);
+    }
+
+    public void scheduleTask(Task task, long end) {
+        setEnd(end);
+        scheduleTask(task);
+    }
     
     
     
