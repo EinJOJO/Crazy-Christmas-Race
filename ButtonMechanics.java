@@ -8,7 +8,7 @@ public class ButtonMechanics extends Button {
     @Override
     public void onClick() {
         
-        
+        System.out.println("Nö");        
     }
     
 }
