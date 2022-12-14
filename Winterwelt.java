@@ -150,7 +150,7 @@ public class Winterwelt extends World
             setRunning(!isRunning());    
             Greenfoot.setWorld(new StartScreen());
         }
-        super.act();
+        // super.act();
     }
 
     public Difficulty getDifficulty() {

@@ -24,7 +24,6 @@ public class StartScreen extends World
         textSplash.place();
         textSplash.setRotation(-20);
 
-        textbox = new Textbox();
         setBackground("ScreenStart.png");
         
         prepare();
@@ -47,7 +46,7 @@ public class StartScreen extends World
 
         }
         
-        super.act();
+        // super.act();
 
        
     }
@@ -62,8 +61,6 @@ public class StartScreen extends World
      */
     private void prepare()
     {
-
-        addObject(textbox, 100, 400);
 
         addObject(textSplash, 565, 455);
 
