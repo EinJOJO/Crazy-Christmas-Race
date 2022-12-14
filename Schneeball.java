@@ -11,30 +11,26 @@ public class Schneeball extends Actor
     int speed;
     float rotation; 
     Player werfer;
+    
+    
     public void act() 
     {
         // Add your action code here.
     }
     
-    public void bewegen( ) {
-        y = getY() + Math.cos(_a_);
-    }
+  
+    //public boolean werferSanta()
+    //ist Santa der Werfer des Schneeballs?
     
-    
-    public boolean werferSanta()
-    {
-            if (Greenfoot.isKeyDown(controlKeys[0]&&Greenfoot.isSpacebardown)) { 
-
-                getY(getObjectsInRange(_radius_, _cls_));
-                return getIntersectingObjects(Santa.class).size() > 0;
-        
-            }
-        }
            
         
-    public boolean werferRentier()
-    {
-        return getIntersectingObjects(Rentier.class).size() > 0;
-    }
-            
-        }
+    //public boolean werferRentier()
+    //{
+        //return getIntersectingObjects(Rentier.class).size() > 0;
+    //}
+    //ist das Rentier der Werfer des Schneeballs?
+    //wird ein Spieler getroffen?
+    // -> zurück auf startposition
+    //wird ein autop getroffen? --> speed=0
+    
+}

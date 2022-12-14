@@ -10,7 +10,7 @@ import greenfoot.*;
 public class Auto extends Actor
 {    
     private final boolean blue;
-    private final int speed;
+    private int speed;
     private final boolean drivingLeft;
     private boolean spawned = false; 
 
@@ -66,8 +66,26 @@ public class Auto extends Actor
             spawn();
         }
         
+        if (wirdSchneeballBeruehrt()){
+            speed=0;
+        
+        }
+        
     }
-
+    
+    public boolean wirdSchneeballBeruehrt()
+    {
+        
+        Schneeball schneeball = (Schneeball) getOneIntersectingObject(Schneeball.class);
+        if (schneeball==null)
+        {
+            return false;
+        }
+        
+        return true;
+        
+    }
+    
     public void spawn() {
         if (!spawned) {
             if (isBlue()) {
