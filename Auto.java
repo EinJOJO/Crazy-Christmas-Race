@@ -1,3 +1,5 @@
+import java.util.Random;
+
 import greenfoot.*;
 
 /**
@@ -13,6 +15,8 @@ public class Auto extends Actor
     private int speed;
     private final boolean drivingLeft;
     private boolean spawned = false; 
+
+    private Timer respawnTimer = new Timer(); 
 
     /**
      * Konstruktor 1 von 2. Leere Parameter:
@@ -45,7 +49,6 @@ public class Auto extends Actor
 
     public void act() 
     {
-
         if(!spawned) return;
 
         //Auto bewegen.
@@ -57,13 +60,16 @@ public class Auto extends Actor
 
         //Auto zurücksetzen
         if (isAtEdge()) {
-            despawn();
-            if (drivingLeft) {
+            despawn(); 
+            // Positioniere...
+            if (drivingLeft) { 
                 setLocation(getWorld().getWidth(), getY());
             } else {
                 setLocation(0, getY());
             }
-            spawn();
+            // Respawn
+            ((Winterwelt) getWorld()).addToDelayQueue(this);
+            return;
         }
         
         if (wirdSchneeballBeruehrt()){

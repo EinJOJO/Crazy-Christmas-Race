@@ -1,6 +1,7 @@
 
 /**
- * Timer Klasse.
+ * Timer Klasse von Johannes für Alle.
+ * 
  * 
  * Um den Timer zu nutzen: 
  * 1. Variable erstellen,
@@ -12,8 +13,8 @@
 public class Timer 
 {
     private long timerStarted; 
-    private boolean running;
-    private long ende;
+    private boolean running = false;
+    private long ende = 0;
     
     /**
      * @return ob der Timer gerade läuft. 
@@ -33,7 +34,7 @@ public class Timer
      * @return Ob der Timer das Ende erreicht hat, was vorher definiert wurde.
      */
     public boolean isFinished() { 
-        return System.currentTimeMillis() > timerStarted + ende; // Ob die aktuelle Zeit größer ist als die Startzeit + die zuwartende Zeit.
+        return System.currentTimeMillis() >= timerStarted + ende; // Ob die aktuelle Zeit größer ist als die Startzeit + die zuwartende Zeit.
     }
     
     /**
@@ -53,10 +54,4 @@ public class Timer
     public void stop() {
         running = false;
     }
-    
-    
-    
-    
-    
-
 }

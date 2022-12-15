@@ -1,4 +1,6 @@
-        import java.util.Random;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
@@ -10,28 +12,14 @@ public class Winterwelt extends World
 {
     public static Zaehler counterSanta;
     public static Zaehler counterRentier;
+    public static Winterwelt instance;
 
     private final Difficulty difficulty;
+    private List<Auto> carSpawnQueue = new ArrayList<>();
     private boolean running = true;
-    Random random = new Random();
-
-    /**
-     * How much speed on top to the base speed.
-     */
-    public enum Difficulty {
-        EASY(-1, 0),
-        NORMAL(0 , 1),
-        HARD(1,  2),
-        CHALLENGING(2, 3); 
-
-        public final int summand;
-        public final int index;
-        private Difficulty(int summand, int index) {
-            this.summand = summand;
-            this.index = index;
-        }
-    }
-
+    private Random random = new Random();
+    private Timer queueDelay = new Timer(); 
+    
     /**
      * Constructor for objects of class Winterwelt.
      * 
@@ -40,18 +28,19 @@ public class Winterwelt extends World
     {    
         // Erstelle eine Welt mit 600x400 Zellen und einer Zellgröße von 1x1 Pixeln.
         super(800, 600, 1); 
-        this.difficulty = Difficulty.EASY;
+        this.difficulty = Difficulty.NORMAL;
         setup();
+        
     }
 
     public Winterwelt(Difficulty difficulty) {
         super(800, 600, 1); 
         this.difficulty = difficulty;
-
         setup();
     }
 
     private void setup() {
+        instance = this;
         GreenfootImage background = new GreenfootImage("Winterwelt.jpg");
         setBackground(background);
         setPaintOrder(Card.class, Button.class ,Santa.class, Rentier.class, Zaehler.class, Haus.class, Auto.class, Schlitten.class);
@@ -72,13 +61,6 @@ public class Winterwelt extends World
         spawnRandomCars();
     }
 
-
-    public void setRunning(boolean running) {
-        this.running = running;
-    }
-
-    
-
     private void spielerUndHausErstellen()
     {
         Santa santa = new Santa();
@@ -92,6 +74,10 @@ public class Winterwelt extends World
         Haus haus = new Haus();
         addObject(haus,400,20);
 
+    }
+    
+    public void addToDelayQueue(Auto auto) {
+        this.carSpawnQueue.add(auto);
     }
 
     private void spawnRandomCars() {
@@ -115,7 +101,7 @@ public class Winterwelt extends World
             }
         }
     }
-
+    private boolean schlittenRichtung = false;
     public void schlittenZufaelligErstellen()
     {
         int[] yLevels = new int[]{65, 110, 160, 205, 250}; // Reihe 1, 2, 3 etc.
@@ -143,13 +129,33 @@ public class Winterwelt extends World
        }
        
     }
-    public boolean schlittenRichtung = false;
+    
     @Override
     public void act() {
+        if (!carSpawnQueue.isEmpty()) {
+            if (!queueDelay.isRunning()) {
+                queueDelay.setEnd(random.nextInt(20) * 100);
+                queueDelay.start();
+                return; 
+            }
+            if (!queueDelay.isFinished()) return; 
+            queueDelay.stop();
+            Auto car = carSpawnQueue.get(0);
+            car.spawn(); 
+            if (car.isTouchingCar()) {
+                car.despawn();
+            } else {
+                carSpawnQueue.remove(0);
+            }
+
+        }
+
         if (Greenfoot.isKeyDown("escape")) {
             setRunning(!isRunning());    
             Greenfoot.setWorld(new StartScreen());
         }
+        
+        
         // super.act();
     }
 
@@ -157,14 +163,33 @@ public class Winterwelt extends World
         return difficulty;
     }
   
-
-
-    
-    
     public boolean isRunning()
     {
         return running;
-
+    }
+    public void setRunning(boolean running) {
+        this.running = running;
     }
 
+    public static Winterwelt getInstance() {
+        return instance;
+    }
+
+
+        /**
+     * How much speed on top to the base speed.
+     */
+    public enum Difficulty {
+        EASY(-1, 0),
+        NORMAL(0 , 1),
+        HARD(1,  2),
+        CHALLENGING(2, 3); 
+
+        public final int summand;
+        public final int index;
+        private Difficulty(int summand, int index) {
+            this.summand = summand;
+            this.index = index;
+        }
+    }
 }
