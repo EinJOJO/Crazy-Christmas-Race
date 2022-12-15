@@ -133,30 +133,48 @@ public class Winterwelt extends World
     @Override
     public void act() {
         if (!carSpawnQueue.isEmpty()) {
+            
             if (!queueDelay.isRunning()) {
-                queueDelay.setEnd(random.nextInt(20) * 100);
+                queueDelay.setEnd(random.nextInt(20) * 50);
                 queueDelay.start();
+                //System.out.println("Queue timer started.");
                 return; 
             }
             if (!queueDelay.isFinished()) return; 
-            queueDelay.stop();
+            //System.out.println("Queue timer finished.");
+        
             Auto car = carSpawnQueue.get(0);
             car.spawn(); 
             if (car.isTouchingCar()) {
-                car.despawn();
-            } else {
-                carSpawnQueue.remove(0);
+                //System.out.println("is Touching...");
+                queueDelay.start();
+                queueDelay.setEnd(0);
+                //car.despawn();
+                
+                
+                return;
             }
+            carSpawnQueue.remove(0);
+            if (random.nextBoolean()) queueDelay.stop();
 
+            
+            
         }
 
         if (Greenfoot.isKeyDown("escape")) {
             setRunning(!isRunning());    
             Greenfoot.setWorld(new StartScreen());
         }
+
+    
         
         
         // super.act();
+    }
+
+
+    public List<Auto> getCarSpawnQueue() {
+        return carSpawnQueue;
     }
 
     public Difficulty getDifficulty() {

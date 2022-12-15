@@ -1,5 +1,4 @@
-import java.util.Random;
-
+import java.util.List;
 import greenfoot.*;
 
 /**
@@ -16,7 +15,6 @@ public class Auto extends Actor
     private final boolean drivingLeft;
     private boolean spawned = false; 
 
-    private Timer respawnTimer = new Timer(); 
 
     /**
      * Konstruktor 1 von 2. Leere Parameter:
@@ -68,7 +66,9 @@ public class Auto extends Actor
                 setLocation(0, getY());
             }
             // Respawn
-            ((Winterwelt) getWorld()).addToDelayQueue(this);
+            if (!Winterwelt.getInstance().getCarSpawnQueue().contains(this))  {
+                Winterwelt.getInstance().addToDelayQueue(this);
+            }
             return;
         }
         
@@ -125,7 +125,18 @@ public class Auto extends Actor
     }
 
     public boolean isTouchingCar() {
-        return !getIntersectingObjects(Auto.class).isEmpty();
+        if (!spawned) return false;
+        List<Auto> list = getIntersectingObjects(Auto.class);
+        if (list.isEmpty()) return false;
+        
+        for (Auto auto : list) {
+            if (!auto.isSpawned()) {
+                continue;
+            }
+            return true;    
+        }
+        return false;
+        
     }
     
     public int getSpeed() {
