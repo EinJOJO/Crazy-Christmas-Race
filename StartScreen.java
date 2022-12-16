@@ -26,15 +26,16 @@ public class StartScreen extends World
         textSplash.setRotation(-20);
 
         setBackground("ScreenStart.png");
-        
+        Winterwelt.music.stop();
         music.setVolume(40);
         if (!music.isPlaying() && ButtonMusic.getInstance().isMusicOn()) {
             music.playLoop();
-            
+
         }
 
         prepare();
         Greenfoot.start();
+        Winterwelt.streetSFX.stop();
     }
 
     @Override

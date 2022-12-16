@@ -1,4 +1,6 @@
 import java.util.List;
+import java.util.Random;
+
 import greenfoot.*;
 
 /**
@@ -12,8 +14,24 @@ public class Auto extends Actor
 {    
     private final boolean blue;
     private int speed;
+    private int originalSpeed;
+    private int targetSpeed; 
     private final boolean drivingLeft;
     private boolean spawned = false; 
+    private Random random = new Random();
+    private static GreenfootSound s1 = new GreenfootSound("car1.mp3");
+    private static GreenfootSound s2 = new GreenfootSound("car2.mp3");
+    private static GreenfootSound s3 = new GreenfootSound("honk1.mp3");
+    private static GreenfootSound s4 = new GreenfootSound("honk2.mp3");
+    private static GreenfootSound[] crashSounds = new GreenfootSound[]{
+        new GreenfootSound("crash1.mp3"),
+        new GreenfootSound("crash2.mp3"),
+        new GreenfootSound("crash3.mp3")
+    };
+
+    private Timer brakeTimer = new Timer();
+
+    
 
 
     /**
@@ -23,8 +41,10 @@ public class Auto extends Actor
     public Auto() {
         this.blue = true;
         this.speed = 2;
+        targetSpeed = 2;
         this.drivingLeft = false;
         spawn();
+
     }
 
     /**
@@ -34,6 +54,8 @@ public class Auto extends Actor
 
     {
         this.speed = speed;
+        this.targetSpeed = speed;
+        this.originalSpeed = speed;
         this.blue = autoBlau;
         this.drivingLeft = drivesToLeft;
     
@@ -44,11 +66,21 @@ public class Auto extends Actor
         spawn();
     }
 
+    
 
     public void act() 
     {
+        
         if(!spawned) return;
+        if (brakeTimer.isRunning()) {
+            if (brakeTimer.isFinished()) {
+                targetSpeed = originalSpeed;
+                brakeTimer.stop();
+            }
+        }
 
+        accelerate();
+        carCollision();
         //Auto bewegen.
         if (drivingLeft) {
             setLocation(getX() - speed, getY());
@@ -56,6 +88,9 @@ public class Auto extends Actor
             setLocation(getX() + speed, getY());
         }
 
+        // Sound
+        playDriveSounds();
+        playerCollision();
         //Auto zurücksetzen
         if (isAtEdge()) {
             despawn(); 
@@ -78,7 +113,78 @@ public class Auto extends Actor
         }
         
     }
+
+    public void accelerate() {
+        if (targetSpeed == speed) return;
+        if (targetSpeed > speed) {
+            speed++;
+        } else {
+            speed--;
+        }
+    }
     
+    
+    public void carCollision() {
+        if (speed == 0) return;
+        if (getHittedCar() != null) { 
+            
+            brake();
+            crashSounds[2].setVolume(30);
+            crashSounds[2].play();
+        } 
+    }
+    public void playerCollision() {
+        if (!spawned) return;
+        if (speed == 0) return;
+        if (!getIntersectingObjects(Player.class).isEmpty()) {
+            // PLAY SOUNDS
+            int r = random.nextInt(3);
+            switch (r) {
+                case 0:
+                    s3.setVolume(30);
+                    crashSounds[0].setVolume(20);
+                    crashSounds[0].play();
+                    s3.play();  
+                    break;
+                case 2:
+                    crashSounds[1].setVolume(20);
+                    crashSounds[1].play();
+                case 1:
+                    s4.setVolume(30);
+                    s4.play();  
+                    break;
+
+            } 
+            brake();
+            
+        }
+    }
+
+    private void brake() {
+        targetSpeed = 0;
+            brakeTimer.setEnd(500);
+            brakeTimer.start();
+    }
+
+    public void playDriveSounds() {
+        int i = getObjectsInRange(60, Player.class).size();
+        
+        boolean shouldPlaySounds = i != 0;
+        if (!shouldPlaySounds) return;
+        int r = random.nextInt(2);
+        
+        switch (r) {
+            case 0:
+                 s1.setVolume(30);
+                 s1.play();  
+                break;
+            case 1:
+                 s2.setVolume(30);
+                 s2.play();  
+                break;
+        }   
+    }
+
     public boolean wirdSchneeballBeruehrt()
     {
         
@@ -122,6 +228,29 @@ public class Auto extends Actor
     
     public boolean isSpawned() {
         return spawned;
+    }
+
+
+    private Auto getHittedCar() {
+        if (!isTouchingCar()) return null;
+
+        List<Auto> list = getIntersectingObjects(Auto.class);
+        Auto hittedCar = null;
+        
+        if (drivingLeft) {
+            for (Auto a : list) {
+                if (a.getX() < getX()) { // Wenn das Auto vor einem ist:
+                    hittedCar = a;
+                }
+            }
+        } else {
+            for (Auto a : list) {
+                if (a.getX() > getX()) { // Wenn das Auto vor einem ist:
+                    hittedCar = a;
+                }
+            }
+        }
+        return hittedCar;
     }
 
     public boolean isTouchingCar() {

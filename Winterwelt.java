@@ -10,9 +10,11 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Winterwelt extends World
 {
+    public static GreenfootSound streetSFX = new GreenfootSound("street.mp3");
     public static Zaehler counterSanta;
     public static Zaehler counterRentier;
     public static Winterwelt instance;
+    public static GreenfootSound music = new GreenfootSound("gameMusic.mp3");
 
     private final Difficulty difficulty;
     private List<Auto> carSpawnQueue = new ArrayList<>();
@@ -55,10 +57,22 @@ public class Winterwelt extends World
 
         ButtonDifficulty buttonDifficulty = new ButtonDifficulty(difficulty);
         addObject(buttonDifficulty, 763, 17);
+        addObject(ButtonMusic.getInstance(), 773, 577);
 
         spielerUndHausErstellen();
         schlittenZufaelligErstellen();
         spawnRandomCars();
+
+        if (!streetSFX.isPlaying()) {
+            streetSFX.setVolume(40);
+            streetSFX.play();
+        }
+        if (!music.isPlaying() && ButtonMusic.getInstance().isMusicOn()) {
+            music.setVolume(20);
+            music.play();
+            StartScreen.music.stop();
+        }
+
     }
 
     private void spielerUndHausErstellen()
@@ -142,7 +156,7 @@ public class Winterwelt extends World
                         break;
                     case HARD:
                     case CHALLENGING:
-                        queueDelay.setEnd(random.nextInt(30) * 50); 
+                        queueDelay.setEnd(random.nextInt(30) * 25); 
                         break;
                 }
                 queueDelay.start();

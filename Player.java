@@ -14,10 +14,18 @@ public abstract class Player extends Actor {
      * 3: down
      */
     private final String[] controlKeys; 
+    private int deaths;
     private int speed;
     private final int spawnX;
     private final int spawnY;
     private final Zaehler pointsCounter;
+    
+    private static GreenfootSound s1 = new GreenfootSound("humanImpact.mp3");
+    private static GreenfootSound s2 = new GreenfootSound("splash.mp3");
+    static {
+        s1.setVolume(20);
+        s2.setVolume(30);
+    }
 
 
     /**
@@ -30,7 +38,7 @@ public abstract class Player extends Actor {
             throw new Error("Parameter controlKeys ungültig.");
         }
         this.controlKeys = controlKeys;
-        this.speed = 4;
+        this.speed = 2;
         this.spawnX = spawnX;
         this.spawnY = spawnY;
         this.pointsCounter = pointsCounter;
@@ -44,6 +52,8 @@ public abstract class Player extends Actor {
         handleInput();    
         
         if (isTouchingCar()) {
+            deaths++;
+            s1.play();
             respawn();
         }
             
@@ -57,6 +67,9 @@ public abstract class Player extends Actor {
         }
 
         if (isOnIce()){
+            deaths++;
+            s2.play();
+            new IceHole(getX(), getY());
             respawn();
         }
       
@@ -64,6 +77,7 @@ public abstract class Player extends Actor {
     }
     
     public void respawn () {
+        
         setLocation(spawnX, spawnY);
     }
     
@@ -159,6 +173,10 @@ public abstract class Player extends Actor {
         }
     }
 
+ 
+    public int getDeaths() {
+        return deaths;
+    }
     public abstract String getName();
     
 }

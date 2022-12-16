@@ -1,3 +1,5 @@
+import greenfoot.World;
+
 public class ButtonMusic extends Button
 {
 
@@ -18,12 +20,26 @@ public class ButtonMusic extends Button
     @Override
     public void onClick() {
         musicOn = !musicOn;
+        playMusic();
+    }
+
+    public void playMusic() {
         if (musicOn) {
             setImage("ButtonMusicOn.png");
-            StartScreen.music.playLoop();
+            World current = getWorld();
+            if (current instanceof Winterwelt) {
+                Winterwelt.music.playLoop();
+                StartScreen.music.stop();
+            }
+            
+            if (current instanceof StartScreen) {
+                StartScreen.music.playLoop();
+                Winterwelt.music.stop();
+            }
         } else {
             setImage("ButtonMusicOff.png");
             StartScreen.music.stop();
+            Winterwelt.music.stop();
         }
     }
 
