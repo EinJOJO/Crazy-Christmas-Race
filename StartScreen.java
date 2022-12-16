@@ -10,6 +10,7 @@ public class StartScreen extends World
 
     TextSplash textSplash;
     Textbox textbox;
+    public static GreenfootSound music = new GreenfootSound("StartScreen.mp3");
 
     /**
      * Constructor for objects of class StartScreen.
@@ -26,7 +27,14 @@ public class StartScreen extends World
 
         setBackground("ScreenStart.png");
         
+        music.setVolume(50);
+        if (!music.isPlaying()) {
+            music.playLoop();
+            
+        }
+
         prepare();
+        Greenfoot.start();
     }
 
     @Override
