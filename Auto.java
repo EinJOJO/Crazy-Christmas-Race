@@ -70,7 +70,6 @@ public class Auto extends Actor
 
     public void act() 
     {
-        
         if(!spawned) return;
         if (brakeTimer.isRunning()) {
             if (brakeTimer.isFinished()) {

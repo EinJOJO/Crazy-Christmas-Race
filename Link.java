@@ -43,6 +43,7 @@ public class Link extends Textbox {
         if (Greenfoot.mouseClicked(this)) {
             if (!openWebpage()) {
                 setText("Link konnte nicht geöffnet werden.");
+                
                 if (timer == null) {
                     timer = new Timer();
                     timer.setEnd(1000 * 2);
@@ -99,7 +100,7 @@ public class Link extends Textbox {
                 desktop.browse(uri);
                 return true;
             } catch (Exception e) {
-                e.printStackTrace();
+                Logger.getInstance().warn(e.getStackTrace());
             }
         }
         return false;

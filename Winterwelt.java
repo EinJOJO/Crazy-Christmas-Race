@@ -43,6 +43,7 @@ public class Winterwelt extends World
 
     private void setup() {
         instance = this;
+        Logger.getInstance().info("=== New instance of Winterwelt. ===");
         GreenfootImage background = new GreenfootImage("Winterwelt.jpg");
         setBackground(background);
         setPaintOrder(Card.class, Button.class ,Santa.class, Rentier.class, Zaehler.class, Haus.class, Auto.class, Schlitten.class);
@@ -96,33 +97,36 @@ public class Winterwelt extends World
 
     private void spawnRandomCars() {
         int[] yLevels = new int[]{328, 374, 423, 475, 526}; // Reihe 1, 2, 3 etc.
-        for (int i = 0; i < yLevels.length; i++) { //"Für jede Reihe..." // - von sebastian: tut sie aber nicht. die autos sid in einer reihe teilweise nicht existent (auf einer hoehe) und fahren teils auch nicht
+        for (int i = 0; i < yLevels.length; i++) { //"Für jede Reihe..." // - von sebastian: tut sie aber nicht. die autos sid in einer reihe teilweise nicht existent (auf einer hoehe) und fahren teils auch nicht //- Johannes "Das hat damit nichts zu tun. Die Anzahl der Autos wird weiter unten bestimmt..."
             int y = yLevels[i]; //Höhe der Reihe
             int speed = random.nextInt(5) + getDifficulty().summand + 1; // Speed = Reihe + Difficulty Geschwindigkeit + 1.
-            int carsCount = random.nextInt(3) + 1 + getDifficulty().summand; // Anzahl der Autos.
+            int carsCount = random.nextInt(5) + 1 + 1 * getDifficulty().summand; // Anzahl der Autos.
             boolean drivingLeft = random.nextBoolean(); // Richtung. 
             
-            for (int j = 0; j < carsCount; j++) {
+            for (int j = 0; j < carsCount; j++) { // Erstelle |x| Autos.
                 Auto auto = new Auto(speed, random.nextBoolean(), drivingLeft);
                 int x = random.nextInt(getWidth() - 50);
                 addObject(auto, x, y);
-                if (auto.isTouchingCar()) {
+                if (auto.isTouchingCar()) { // Wenn ein Auto, ein anderes Auto berührt, wird versucht das Auto woanders zu platzieren.
                     j--;
                     removeObject(auto);
                     continue;
-                }
-                
+                }   
             }
+            Logger.getInstance().info(String.format("Created %d cars{speed: %d, left: %b}, Y-Level %d", carsCount, speed, drivingLeft, y));
         }
     }
     private boolean schlittenRichtung = false;
     public void schlittenZufaelligErstellen()
     {
         int[] yLevels = new int[]{65, 110, 160, 205, 250}; // Reihe 1, 2, 3 etc.
-       for (int i = 0; i < yLevels.length; i++) { //"Für jede Reihe..." // - von sebastian: tut sie aber nicht. die autos sid in einer reihe teilweise nicht existent (auf einer hoehe) und fahren teils auch nicht
+       for (int i = 0; i < yLevels.length; i++) { //"Für jede Reihe..." // - von sebastian: tut sie aber nicht. die autos sid in einer reihe teilweise nicht existent (auf einer hoehe) und fahren teils auch nicht //-~ Johannes: s.o.
             int y = yLevels[i]; //Höhe der Reihe
             int speed = random.nextInt(4) + 1 + getDifficulty().summand; // Speed = Reihe + Difficulty Geschwindigkeit + 1.
             int schlittenCount = random.nextInt(3) + 1 - getDifficulty().summand; // Anzahl der Schlitten.
+            if (schlittenCount < 1) {
+                schlittenCount = 1;
+            }
             schlittenRichtung = !schlittenRichtung;
             boolean drivingLeft = schlittenRichtung;
             
@@ -139,6 +143,8 @@ public class Winterwelt extends World
                 }
                 
             }
+            Logger.getInstance().info(String.format("Created %d slides{speed: %d, left: %b}, Y-Level %d", schlittenCount, speed, drivingLeft, y));
+            
             
        }
        
@@ -161,6 +167,9 @@ public class Winterwelt extends World
                 }
                 queueDelay.start();
                 return; 
+            }
+            if (carSpawnQueue.size() > 8 + 2 * difficulty.summand) { // Man vermeidet zu viele Autos in der Schlange
+                    queueDelay.setEnd(0);
             }
              
             if (!queueDelay.isFinished()) return; 

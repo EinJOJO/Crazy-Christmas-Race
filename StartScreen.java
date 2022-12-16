@@ -9,7 +9,7 @@ public class StartScreen extends World
 {
 
     TextSplash textSplash;
-    Textbox textbox;
+  
     public static GreenfootSound music = new GreenfootSound("StartScreen.mp3");
 
     /**
@@ -39,17 +39,18 @@ public class StartScreen extends World
     }
 
     @Override
-    public void act() {    
-        if (Greenfoot.getKey() == "f3") {
+    public void act() {
+        String key = Greenfoot.getKey();
+        
+        if (key != null && key.equals("f3")) {
             Logger logger = Logger.getInstance();
             
             logger.setPrintLogs(!logger.isPrintLogs());
 
             if (logger.isPrintLogs()) {
-                textbox.setText("Enabled logger printing.");
                 System.out.println("Enabled logger printing");
             } else {
-                textbox.setText("Disabled logger printing.");
+               System.out.println("Disabled logger printing");
             };
 
 

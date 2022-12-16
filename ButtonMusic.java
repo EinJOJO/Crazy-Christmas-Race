@@ -20,6 +20,7 @@ public class ButtonMusic extends Button
     @Override
     public void onClick() {
         musicOn = !musicOn;
+        Logger.getInstance().info("Music is now " + String.valueOf(musicOn));
         playMusic();
     }
 
