@@ -5,4 +5,4 @@ Imagine Schule hätte Internet...
 Gesamtschule kann sowas nicht.
 "String ist wie int nur anders." ~ TI
 Oli kann durch 0 teilen.
-Lukas kennt die Ziffer von PI.
+Lukas kennt die letzte Ziffer von PI.
