@@ -58,6 +58,15 @@ public class CreditsScreen extends World
             themeMusic.setColor(Color.WHITE);
             addObject(themeMusic, 718, 317);
 
+            Link gameMusic = new Link("https://www.epidemicsound.com/track/EidLWaZSrp/" ,
+            "Roots and Recognition\n          Carols Song"); 
+            gameMusic.setColor(Color.WHITE);
+            addObject(gameMusic, 740, 372);
+
+            Link epidemic = new Link("https://www.epidemicsound.com", "Epidemic Sound ");
+            epidemic.setColor(Color.ORANGE);
+            addObject(epidemic, 635, 457 );
+
         
         } catch (Exception e) {
             //Ignore.
