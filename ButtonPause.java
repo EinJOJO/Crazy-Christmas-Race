@@ -10,9 +10,6 @@ public class ButtonPause extends Button {
         Winterwelt world = (Winterwelt) getWorld();
         world.setRunning(!world.isRunning());
     }
-    @Override
-    public void act() {
-        super.act();
-    }
+   
     
 }

@@ -38,6 +38,9 @@ public class CreditsScreen extends World
      */
     private void prepare()
     {
+        
+        addObject(new ButtonHome(), 400, 520);
+        
         try {
             Link figma = new Link("https://www.figma.com", "Figma");
             figma.setColor(Color.WHITE);

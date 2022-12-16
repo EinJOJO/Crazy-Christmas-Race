@@ -26,7 +26,7 @@ public abstract class Button extends Actor
     }
 
 
-    public void act() 
+    public final void act() 
     {
         MouseInfo mouseInfo = Greenfoot.getMouseInfo();
         defineDefaultPosition();
