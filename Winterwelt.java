@@ -133,25 +133,25 @@ public class Winterwelt extends World
     @Override
     public void act() {
         if (!carSpawnQueue.isEmpty()) {
-            
+            // Start neues delay.
             if (!queueDelay.isRunning()) {
-                queueDelay.setEnd(random.nextInt(20) * 50);
+                queueDelay.setEnd(random.nextInt(60) * 50);
                 queueDelay.start();
-                //System.out.println("Queue timer started.");
                 return; 
             }
+             
             if (!queueDelay.isFinished()) return; 
-            //System.out.println("Queue timer finished.");
         
-            Auto car = carSpawnQueue.get(0);
-            car.spawn(); 
-            if (car.isTouchingCar()) {
-                //System.out.println("is Touching...");
+            // Wenn die random Zeit abgelaufen ist.
+            // Nächstes Auto aus der Liste.
+            Auto car = carSpawnQueue.get(0); 
+            
+            car.spawn();
+             
+            if (car.isTouchingCar()) { // Überlappende Autos vermeiden.
                 queueDelay.start();
                 queueDelay.setEnd(0);
-                //car.despawn();
-                
-                
+                car.despawn();
                 return;
             }
             carSpawnQueue.remove(0);
