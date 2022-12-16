@@ -28,7 +28,7 @@ public class StartScreen extends World
         setBackground("ScreenStart.png");
         
         music.setVolume(50);
-        if (!music.isPlaying()) {
+        if (!music.isPlaying() && ButtonMusic.getInstance().isMusicOn()) {
             music.playLoop();
             
         }
@@ -77,6 +77,8 @@ public class StartScreen extends World
         addObject(new ButtonMechanics(),395,333);
 
         addObject(new ButtonStartGame(),395,253);
+
+        addObject(ButtonMusic.getInstance(), 773, 577);
     }
 
 

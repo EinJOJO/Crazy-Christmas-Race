@@ -64,6 +64,9 @@ public abstract class Button extends Actor
     }    
     public void onHover()  {
         hoverPosition();
+        hoverTransparency();
+    }
+    public void hoverTransparency() {
         GreenfootImage image = getImage();
         if (isHovering()) {
             
