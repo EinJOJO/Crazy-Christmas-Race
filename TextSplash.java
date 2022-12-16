@@ -79,7 +79,7 @@ public class TextSplash extends Textbox {
          if (time > System.currentTimeMillis()) {
             return;
         } else {
-            time = System.currentTimeMillis() + 40;
+            time = System.currentTimeMillis() + 50;
         } 
 
 

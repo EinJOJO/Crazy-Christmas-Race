@@ -1,3 +1,5 @@
+
+
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
@@ -15,7 +17,50 @@ public class CreditsScreen extends World
      */
     public CreditsScreen()
     {    
-        // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
-        super(600, 400, 1); 
+
+        super(800, 600, 1); 
+        setBackground(new GreenfootImage("ScreenCredits.png"));
+        prepare();
+    }
+    
+    
+    public void act() {
+    
+        if (Greenfoot.isKeyDown("escape")) {
+            
+            Greenfoot.setWorld(new StartScreen());
+        }
+    }
+    
+    /**
+     * Prepare the world for the start of the program.
+     * That is: create the initial objects and add them to the world.
+     */
+    private void prepare()
+    {
+        try {
+            Link figma = new Link("https://www.figma.com", "Figma");
+            figma.setColor(Color.WHITE);
+            addObject(figma,400,322 - 10);
+
+            Link twitter = new Link("https://twitter.com/ein_jojo", "Twitter");
+            twitter.setColor(Color.CYAN);
+            twitter.setFontSize(20);
+            addObject(twitter,182, 149 - 20);
+
+            Link github = new Link("https://github.com/EinJOJO/", "Github");
+            github.setColor(Color.WHITE);
+            github.setFontSize(20);
+            addObject(github,178, 177 - 20);
+
+            Link themeMusic = new Link("https://www.epidemicsound.com/track/PvR2BjpAGL/",
+             " Trevor Kowalski\nChristmas Begins");
+            themeMusic.setColor(Color.WHITE);
+            addObject(themeMusic, 718, 317);
+
+        
+        } catch (Exception e) {
+            //Ignore.
+        }
     }
 }

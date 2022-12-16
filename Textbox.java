@@ -17,7 +17,7 @@ public class Textbox extends Actor
 
     public void setColor(Color color) {
         this.color = color;
-    
+        update();
     }
 
     public void setFontSize(int fontSize) {
@@ -30,10 +30,12 @@ public class Textbox extends Actor
         return color;
     }
 
+    
 
     public void setText(String text) {
         this.text = text;
-        this.image = new GreenfootImage(9 * text.length() + 20, fontSize + 10);
+        String[] lines = text.split("\n");
+        this.image = new GreenfootImage(9 * text.length() + 20, fontSize * lines.length + 10);
         update();
     }
 
@@ -46,7 +48,9 @@ public class Textbox extends Actor
         image.clear();
         image.setColor(getColor());
         image.setFont( new Font( "SANSERIF", true, false, fontSize ) );
-        image.drawString(text, 5, fontSize - 2);
+        
+        
+        image.drawString(text, 5, fontSize  - 2);
         setImage(image);
     }
 }

@@ -45,6 +45,7 @@ public class Timer
      * 5 Minuten => setEnd(1000 * 60 * 5)
      */
     public void setEnd(long timeMillis) { 
+        
         ende = timeMillis;
     }
     
