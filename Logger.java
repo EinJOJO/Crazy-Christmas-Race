@@ -18,6 +18,7 @@ public class Logger {
     private boolean printLogs;
     BufferedWriter writer;
     ArrayList<String> stash;
+    
 
     public Logger() {
         instance = this;
@@ -55,14 +56,25 @@ public class Logger {
     }
 
     public void info(Object object) {
-        info(Objects.toString(object, "Object is null"));
+        if (object == null) {
+            info("Provided Object is null");
+            return;
+        }
         if (object instanceof Loggable) {
             info(object.getClass().getName() + " implements Loggable:");
             Map<String, String> map = ((Loggable) object).getLogInfo();
             map.forEach((key, value) -> {
+                if (key == null) {
+                    return;
+                }
+                if (value == null) {
+                    value = "null";
+                }
                 info(String.format("[%s] => %s", key, value));
             });
             System.out.println();
+        } else {
+            info(Objects.toString(object, "Object is null"));
         }
     }
     
@@ -128,5 +140,8 @@ public class Logger {
     
     interface Loggable {
         public Map<String, String> getLogInfo();
+        public default void printLogs() {
+            Logger.getInstance().info(this);
+        }
     }
 }

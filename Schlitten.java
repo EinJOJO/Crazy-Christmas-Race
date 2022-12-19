@@ -1,6 +1,9 @@
+import java.util.HashMap;
+import java.util.Map;
+
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
-public class Schlitten extends Actor
+public class Schlitten extends Actor implements Logger.Loggable
 {
     private final int speed;
     private final boolean drivingToLeft;
@@ -92,5 +95,18 @@ public class Schlitten extends Actor
     {
         return speed;
         
+    }
+
+    
+
+    @Override
+    public Map<String, String> getLogInfo() {
+        Map<String, String> map = new HashMap<>();
+        map.put("speed", String.valueOf(speed));
+        map.put("drivingLeft", String.valueOf(drivingToLeft));
+        map.put("respawnProgress", String.valueOf(respawnProgress));
+        map.put("currentX", String.valueOf(getX()));
+        map.put("currentY", String.valueOf(getY()));
+        return map;
     }
 }

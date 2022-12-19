@@ -81,17 +81,20 @@ public class Auto extends Actor implements Logger.Loggable
         }
 
         accelerate();
-        carCollision();
+        
+        if (!playerCollision() && !carCollision()) {
+            if (drivingLeft) {
+                setLocation(getX() - speed, getY());
+            } else {
+                setLocation(getX() + speed, getY());
+            }
+        };
         //Auto bewegen.
-        if (drivingLeft) {
-            setLocation(getX() - speed, getY());
-        } else {
-            setLocation(getX() + speed, getY());
-        }
+        
 
         // Sound
         playDriveSounds();
-        playerCollision();
+        
         //Auto zurücksetzen
         if (isAtEdge()) {
             despawn(); 
@@ -125,18 +128,18 @@ public class Auto extends Actor implements Logger.Loggable
     }
     
     
-    public void carCollision() {
-        if (speed == 0) return;
+    public boolean carCollision() {
         if (getHittedCar() != null) { 
-            
             brake();
             crashSounds[2].setVolume(30);
             crashSounds[2].play();
+            return true;
         } 
+        return false;
     }
-    public void playerCollision() {
-        if (!spawned) return;
-        if (speed == 0) return;
+    public boolean playerCollision() {
+        if (!spawned) return false;
+        if (speed == 0) return false;
         if (!getIntersectingObjects(Player.class).isEmpty()) {
             // PLAY SOUNDS
             int r = random.nextInt(3);
@@ -157,8 +160,9 @@ public class Auto extends Actor implements Logger.Loggable
 
             } 
             brake();
-            
+            return true;
         }
+        return false;
     }
 
     private void brake() {
@@ -276,13 +280,15 @@ public class Auto extends Actor implements Logger.Loggable
     @Override
     public Map<String, String> getLogInfo() {
         Map<String, String> map = new HashMap<>();
-        
+
         map.put("isBlue", String.valueOf(blue));
         map.put("currentSpeed", String.valueOf(speed));
         map.put("originalSpeed", String.valueOf(originalSpeed));
         map.put("targetSpeed", String.valueOf(targetSpeed));
         map.put("drivingLeft", String.valueOf(drivingLeft));
         map.put("spawned", String.valueOf(spawned));
+        map.put("currentX", String.valueOf(getX()));
+        map.put("currentY", String.valueOf(getY()));
         brakeTimer.getLogInfo().forEach((k,v) -> map.put("brakeTimer."+k, v));
 
 

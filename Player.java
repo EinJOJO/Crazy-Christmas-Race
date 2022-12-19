@@ -1,6 +1,7 @@
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Arrays;
 
 import greenfoot.*;
 
@@ -22,6 +23,7 @@ public abstract class Player extends Actor implements Logger.Loggable {
     private final int spawnX;
     private final int spawnY;
     private final Zaehler pointsCounter;
+    private boolean cancelRespawn = false;
     
     private static GreenfootSound s1 = new GreenfootSound("humanImpact.mp3");
     private static GreenfootSound s2 = new GreenfootSound("splash.mp3");
@@ -81,7 +83,7 @@ public abstract class Player extends Actor implements Logger.Loggable {
     }
     
     public void respawn () {
-        
+        if (cancelRespawn) return;
         setLocation(spawnX, spawnY);
     }
     
@@ -183,18 +185,24 @@ public abstract class Player extends Actor implements Logger.Loggable {
     }
     public abstract String getName();
 
+
+
+    public void setCancelRespawn(boolean cancelRespawn) {
+        this.cancelRespawn = cancelRespawn;
+    }
+
     @Override
     public Map<String, String> getLogInfo() {
         Map<String, String> map = new HashMap<>();
 
         map.put("name", getName());
-        map.put("controls", String.valueOf(controlKeys));
+        map.put("controls", Arrays.toString(controlKeys));
         map.put("speed", String.valueOf(speed));
         map.put("spawnX", String.valueOf(spawnX));
         map.put("spawnY", String.valueOf(spawnY));
         map.put("punkte", String.valueOf(pointsCounter.punkte));
         map.put("deaths", String.valueOf(getDeaths()));
-
+        map.put("cancelRespawn", String.valueOf(cancelRespawn));
         return map;
     }
     

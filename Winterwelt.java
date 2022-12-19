@@ -155,6 +155,22 @@ public class Winterwelt extends World
     
     @Override
     public void act() {
+        // Listen for keys
+        String key = Greenfoot.getKey();
+        
+        if (key != null && key.equals("f3")) {
+            Logger logger = Logger.getInstance();
+            logger.setPrintLogs(!logger.isPrintLogs());
+        }
+        
+        if (key != null && key.equals("escape"))  {
+            setRunning(!isRunning());    
+            Greenfoot.setWorld(new StartScreen());
+        }
+
+
+
+        // Car Queue spawning
         if (!carSpawnQueue.isEmpty()) {
             // Start neues delay.
             if (!queueDelay.isRunning()) {
@@ -195,15 +211,6 @@ public class Winterwelt extends World
             
             
         }
-
-        if (Greenfoot.isKeyDown("escape")) {
-            setRunning(!isRunning());    
-            Greenfoot.setWorld(new StartScreen());
-        }
-
-    
-        
-        
         // super.act();
     }
 

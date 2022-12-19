@@ -51,6 +51,7 @@ public class Link extends Textbox {
                 timer.start();
                 
             }
+            Logger.getInstance().info("Clicked on a link referring to [" + displayText + "] (" +  uri.toASCIIString() + ")");
         }
     }
     public void hoverTransparency() {
