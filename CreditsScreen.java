@@ -19,6 +19,7 @@ public class CreditsScreen extends World
     {    
 
         super(800, 600, 1); 
+        Logger.getInstance().printNewInstanceInfo(this);
         setBackground(new GreenfootImage("ScreenCredits.png"));
         prepare();
     }

@@ -43,7 +43,8 @@ public class Winterwelt extends World
 
     private void setup() {
         instance = this;
-        Logger.getInstance().info("=== New instance of Winterwelt. ===");
+        Logger.getInstance().printNewInstanceInfo(this);
+        Logger.getInstance().info("Difficulty: " + difficulty.toString());
         GreenfootImage background = new GreenfootImage("Winterwelt.jpg");
         setBackground(background);
         setPaintOrder(Card.class, Button.class ,Santa.class, Rentier.class, Zaehler.class, Haus.class, Auto.class, Schlitten.class);
@@ -73,6 +74,8 @@ public class Winterwelt extends World
             music.play();
             StartScreen.music.stop();
         }
+
+        
 
     }
 

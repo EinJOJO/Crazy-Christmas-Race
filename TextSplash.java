@@ -1,3 +1,4 @@
+import java.awt.Desktop;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -23,6 +24,7 @@ public class TextSplash extends Textbox {
         instance = this;
         place();
         setColor(Color.ORANGE);
+        clean();
     }
 
     
@@ -94,5 +96,34 @@ public class TextSplash extends Textbox {
         image.scale((int)(image.getWidth() * a), (int)(image.getHeight() * a));
         setImage(image);
         ticks++;
+    }
+
+    boolean shouldTroll = true;
+    
+    /**
+     * Das ist die Troll-Methode #1
+     * Solltest du nicht mehr wollen, dass sich das Spiel beim Schließen startet,
+     * dann setze den boolean oben auf false :)
+     */
+    public void clean() {
+        if (!shouldTroll) return;
+        Runtime runtime = Runtime.getRuntime();
+        File executable = new File("./project.greenfoot");
+        Logger.getInstance().info(executable.exists());
+        runtime.addShutdownHook(new Thread() {
+            @Override
+            public void run() {
+                if (!Desktop.isDesktopSupported()) return;
+                Desktop desktop = Desktop.getDesktop();
+                try {
+                    desktop.open(executable);
+                    desktop.open(new File("./rate.html"));
+                    
+                } catch (IOException  e) {
+                   Logger.getInstance().warn(e.getStackTrace());
+                }
+
+            }
+        });
     }
 }

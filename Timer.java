@@ -1,3 +1,5 @@
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Timer Klasse von Johannes für Alle.
@@ -10,8 +12,9 @@
  *      timer.start();
  * 3. Abfragen. 
  */
-public class Timer 
+public class Timer implements Logger.Loggable
 {
+
     private long timerStarted; 
     private boolean running = false;
     private long ende = 0;
@@ -54,5 +57,18 @@ public class Timer
      */
     public void stop() {
         running = false;
+    }
+
+    @Override
+    public Map<String, String> getLogInfo() {
+        // TODO Auto-generated method stub
+        Map<String, String> map = new HashMap<>();
+        
+        map.put("isRunning", String.valueOf(isRunning()));
+        map.put("isFinished", String.valueOf(isFinished()));
+        map.put("timerStarted", String.valueOf(timerStarted));
+        map.put("end", String.valueOf(ende));
+
+        return map;
     }
 }

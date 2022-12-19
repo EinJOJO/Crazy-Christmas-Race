@@ -18,10 +18,12 @@ public class StartScreen extends World
      */
     public StartScreen()
     {    
+        
         super(800, 600, 1); 
+        
+        Logger.getInstance().printNewInstanceInfo(this);
         textSplash = TextSplash.getInstance();
         setPaintOrder(Button.class);
-        
         textSplash.place();
         textSplash.setRotation(-20);
 
@@ -30,10 +32,9 @@ public class StartScreen extends World
         music.setVolume(40);
         if (!music.isPlaying() && ButtonMusic.getInstance().isMusicOn()) {
             music.playLoop();
-
         }
 
-        prepare();
+        loadButtons();
         Greenfoot.start();
         Winterwelt.streetSFX.stop();
     }
@@ -44,16 +45,7 @@ public class StartScreen extends World
         
         if (key != null && key.equals("f3")) {
             Logger logger = Logger.getInstance();
-            
             logger.setPrintLogs(!logger.isPrintLogs());
-
-            if (logger.isPrintLogs()) {
-                System.out.println("Enabled logger printing");
-            } else {
-               System.out.println("Disabled logger printing");
-            };
-
-
         }
         
         // super.act();
@@ -62,16 +54,6 @@ public class StartScreen extends World
     }
 
     public void loadButtons() {
-
-    }
-
-    /**
-     * Prepare the world for the start of the program.
-     * That is: create the initial objects and add them to the world.
-     */
-    private void prepare()
-    {
-
         addObject(textSplash, 565 + 30, 455 - 10);
 
         addObject(new ButtonCredits(),395,417);
@@ -82,6 +64,4 @@ public class StartScreen extends World
 
         addObject(ButtonMusic.getInstance(), 773, 577);
     }
-
-
 }

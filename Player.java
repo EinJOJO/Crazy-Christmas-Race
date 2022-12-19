@@ -1,10 +1,13 @@
 
+import java.util.HashMap;
+import java.util.Map;
+
 import greenfoot.*;
 
 /**
  * Die Eigenschaften des Spielers
  */
-public abstract class Player extends Actor {
+public abstract class Player extends Actor implements Logger.Loggable {
  
     /*
      * Index:
@@ -42,7 +45,8 @@ public abstract class Player extends Actor {
         this.spawnX = spawnX;
         this.spawnY = spawnY;
         this.pointsCounter = pointsCounter;
-        Logger.getInstance().info("Created Player Object of " + getName());
+        Logger.getInstance().printNewInstanceInfo(this);
+        Logger.getInstance().info(this);
     }
 
     //Implementieren
@@ -178,5 +182,20 @@ public abstract class Player extends Actor {
         return deaths;
     }
     public abstract String getName();
+
+    @Override
+    public Map<String, String> getLogInfo() {
+        Map<String, String> map = new HashMap<>();
+
+        map.put("name", getName());
+        map.put("controls", String.valueOf(controlKeys));
+        map.put("speed", String.valueOf(speed));
+        map.put("spawnX", String.valueOf(spawnX));
+        map.put("spawnY", String.valueOf(spawnY));
+        map.put("punkte", String.valueOf(pointsCounter.punkte));
+        map.put("deaths", String.valueOf(getDeaths()));
+
+        return map;
+    }
     
 }
