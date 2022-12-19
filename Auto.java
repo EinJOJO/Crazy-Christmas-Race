@@ -1,4 +1,6 @@
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import greenfoot.*;
@@ -10,7 +12,7 @@ import greenfoot.*;
  * TODO:
  * - Random Respawn Delay
  */
-public class Auto extends Actor
+public class Auto extends Actor implements Logger.Loggable
 {    
     private final boolean blue;
     private int speed;
@@ -269,5 +271,21 @@ public class Auto extends Actor
     
     public int getSpeed() {
         return speed;
+    }
+
+    @Override
+    public Map<String, String> getLogInfo() {
+        Map<String, String> map = new HashMap<>();
+        
+        map.put("isBlue", String.valueOf(blue));
+        map.put("currentSpeed", String.valueOf(speed));
+        map.put("originalSpeed", String.valueOf(originalSpeed));
+        map.put("targetSpeed", String.valueOf(targetSpeed));
+        map.put("drivingLeft", String.valueOf(drivingLeft));
+        map.put("spawned", String.valueOf(spawned));
+        brakeTimer.getLogInfo().forEach((k,v) -> map.put("brakeTimer."+k, v));
+
+
+        return map;
     }
 }
