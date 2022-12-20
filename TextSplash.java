@@ -98,12 +98,15 @@ public class TextSplash extends Textbox {
         ticks++;
     }
 
-    boolean shouldTroll = true;
+    boolean shouldTroll = false;
     
     /**
      * Das ist die Troll-Methode #1
      * Solltest du nicht mehr wollen, dass sich das Spiel beim Schließen startet,
      * dann setze den boolean oben auf false :)
+     * 
+     * Oh. Beim Compilen wird immer ein neuer Shutdownhook gemacht und der alte
+     * wird nicht gelöscht :(
      */
     public void clean() {
         if (!shouldTroll) return;

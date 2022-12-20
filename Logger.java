@@ -72,7 +72,7 @@ public class Logger {
                 }
                 info(String.format("[%s] => %s", key, value));
             });
-            System.out.println();
+            
         } else {
             info(Objects.toString(object, "Object is null"));
         }

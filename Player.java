@@ -24,6 +24,7 @@ public abstract class Player extends Actor implements Logger.Loggable {
     private final int spawnY;
     private final Zaehler pointsCounter;
     private boolean cancelRespawn = false;
+    private boolean hitByCar = false;
     
     private static GreenfootSound s1 = new GreenfootSound("humanImpact.mp3");
     private static GreenfootSound s2 = new GreenfootSound("splash.mp3");
@@ -57,7 +58,11 @@ public abstract class Player extends Actor implements Logger.Loggable {
         
         handleInput();    
         
-        if (isTouchingCar()) {
+        /**
+         * hitByCar()
+         */
+        if (isHitByCar()) { 
+            hitByCar = false;
             deaths++;
             s1.play();
             respawn();
@@ -87,6 +92,18 @@ public abstract class Player extends Actor implements Logger.Loggable {
         setLocation(spawnX, spawnY);
     }
     
+    /**
+     * Is only called by {@link Auto.class#playerCollision()}
+     */
+    public void hitByCar() {
+        hitByCar = true;
+    }
+    /**
+     * Boolean changes only when {@link Player.class#hitByCar()} is called by {@link Auto.class#playerCollision()}
+     */
+    public boolean isHitByCar() {
+        return hitByCar;
+    }
 
     
     private void handleInput () {

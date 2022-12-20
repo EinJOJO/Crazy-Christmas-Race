@@ -140,7 +140,31 @@ public class Auto extends Actor implements Logger.Loggable
     public boolean playerCollision() {
         if (!spawned) return false;
         if (speed == 0) return false;
-        if (!getIntersectingObjects(Player.class).isEmpty()) {
+        List<Player> list = getIntersectingObjects(Player.class);
+        if (!list.isEmpty()) {
+            // Call hit by car method
+            for (Player player : list) {
+                player.hitByCar();
+
+                boolean playerHitInFrontOfCar = false;
+                //Decide whether the car should brake or not.
+                if (isDrivingLeft()) {
+                    if (player.getX() < getX() - 45) {
+                        
+                        playerHitInFrontOfCar = true;
+                    }
+                } else {
+                    if (player.getX() > getX() + 45) {
+                        playerHitInFrontOfCar = true;
+                    }
+                }
+
+                if (!playerHitInFrontOfCar) {
+                    return false; // False -> Car will not stop, since the boolean decides whether the move method will be executed.
+                }
+            }
+
+            
             // PLAY SOUNDS
             int r = random.nextInt(3);
             switch (r) {
