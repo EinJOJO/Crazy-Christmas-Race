@@ -71,6 +71,9 @@ public class CreditsScreen extends World
             epidemic.setColor(Color.ORANGE);
             addObject(epidemic, 635, 457 );
 
+            Link google = new Link("https://fonts.google.com/icons", "Google Icons");
+            google.setColor(Color.WHITE);
+            addObject(google, 400, 456);
         
         } catch (Exception e) {
             //Ignore.

@@ -28,10 +28,10 @@ public abstract class Button extends Actor
 
     public final void act() 
     {
-        MouseInfo mouseInfo = Greenfoot.getMouseInfo();
         defineDefaultPosition();
 
         //Is Hovering?
+        MouseInfo mouseInfo = Greenfoot.getMouseInfo();
         if (mouseInfo == null) {
             return;
         }
@@ -40,7 +40,7 @@ public abstract class Button extends Actor
             oldMouseX = mouseInfo.getX();
             oldMouseY = mouseInfo.getY();
         } else {
-            if (isHovering()) {
+            if (hovering) {
                 // #2 Überprüfung ob die Maus sich bewegt hat, weil die vorherige Abfrage false ergab.
                 boolean hasMovedX = oldMouseX != mouseInfo.getX();
                 boolean hasMovedY = oldMouseY != mouseInfo.getY();

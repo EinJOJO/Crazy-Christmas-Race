@@ -8,8 +8,8 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class StartScreen extends World
 {
 
-    TextSplash textSplash;
-  
+    private final TextSplash textSplash;
+    public ButtonDifficulty buttonDifficulty;
     public static GreenfootSound music = new GreenfootSound("StartScreen.mp3");
 
     /**
@@ -23,6 +23,7 @@ public class StartScreen extends World
         
         Logger.getInstance().printNewInstanceInfo(this);
         textSplash = TextSplash.getInstance();
+        buttonDifficulty = new ButtonDifficulty();
         setPaintOrder(Button.class);
         textSplash.place();
         textSplash.setRotation(-20);
@@ -63,5 +64,8 @@ public class StartScreen extends World
         addObject(new ButtonStartGame(),395,253);
 
         addObject(ButtonMusic.getInstance(), 773, 577);
+        addObject(ButtonPlaytime.getInstance(), 435, 210);
+
+        addObject(buttonDifficulty, 315, 210);
     }
 }

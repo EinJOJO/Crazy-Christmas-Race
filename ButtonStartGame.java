@@ -8,8 +8,15 @@ public class ButtonStartGame extends Button {
 
     @Override
     public void onClick() {
-        Greenfoot.setWorld(new Winterwelt());
+        if (!(getWorld() instanceof StartScreen)) return;
+        StartScreen world = (StartScreen) getWorld();
+        
+        Greenfoot.setWorld(new Winterwelt(world.buttonDifficulty.getDifficulty(), minutes()));
         StartScreen.music.stop();
+    }
+    
+    private int minutes() {
+        return ButtonPlaytime.getInstance().getPlayTime();
     }
     
 }

@@ -121,6 +121,6 @@ target8.x=10
 target8.y=190
 version=3.0.0
 width=1296
-world.lastInstantiated=Winterwelt
+world.lastInstantiated=StartScreen
 xPosition=0
 yPosition=0

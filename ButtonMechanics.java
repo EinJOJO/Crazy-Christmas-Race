@@ -1,4 +1,4 @@
-
+import greenfoot.*;
 
 public class ButtonMechanics extends Button {
 
@@ -9,8 +9,7 @@ public class ButtonMechanics extends Button {
 
     @Override
     public void onClick() {
-        // TODO Auto-generated method stub
-        
+        Greenfoot.setWorld(new MechanicsScreen());
     }
     
 }

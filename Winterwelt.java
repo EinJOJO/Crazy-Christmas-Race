@@ -15,7 +15,11 @@ public class Winterwelt extends World
     public static Zaehler counterRentier;
     public static Winterwelt instance;
     public static GreenfootSound music = new GreenfootSound("gameMusic.mp3");
-
+    
+    private Santa santa;
+    private Rentier rentier;
+    private Logger logger = Logger.getInstance();
+    private final Countdown countdown;
     private final Difficulty difficulty;
     private List<Auto> carSpawnQueue = new ArrayList<>();
     private boolean running = true;
@@ -31,20 +35,41 @@ public class Winterwelt extends World
         // Erstelle eine Welt mit 600x400 Zellen und einer Zellgröße von 1x1 Pixeln.
         super(800, 600, 1); 
         this.difficulty = Difficulty.NORMAL;
+        this.countdown = new Countdown(1000 * 60 * 5, this::endGame);
         setup();
         
     }
 
-    public Winterwelt(Difficulty difficulty) {
+    public Winterwelt(Difficulty difficulty, int minutes) {
         super(800, 600, 1); 
         this.difficulty = difficulty;
+        this.countdown = new Countdown(1000 * 60 * minutes, this::endGame);
         setup();
     }
 
+    
+    private void endGame() {
+        logger.info("Game ended.");
+        
+        int pSanta = counterSanta.punkte;
+        int pRentier = counterRentier.punkte;
+        
+        WinScreen.TYPE result; 
+        if (pSanta == pRentier) {
+            result = WinScreen.TYPE.DRAW;
+        } else if (pSanta > pRentier) {
+            result = WinScreen.TYPE.SANTA;
+        } else {
+            result = WinScreen.TYPE.RUDOLF;
+        }
+        
+        Greenfoot.setWorld(new WinScreen(result));
+    }
+    
     private void setup() {
         instance = this;
-        Logger.getInstance().printNewInstanceInfo(this);
-        Logger.getInstance().info("Difficulty: " + difficulty.toString());
+        logger.printNewInstanceInfo(this);
+        logger.info("Difficulty: " + difficulty.toString());
         GreenfootImage background = new GreenfootImage("Winterwelt.jpg");
         setBackground(background);
         setPaintOrder(Card.class, Button.class ,Santa.class, Rentier.class, Zaehler.class, Haus.class, Auto.class, Schlitten.class);
@@ -54,13 +79,15 @@ public class Winterwelt extends World
         counterSanta = new Zaehler("Punkte: ");
         addObject(counterSanta, 200, 580);
 
+        
+
         counterRentier = new Zaehler("Punkte: ");
         addObject(counterRentier, 645, 580);
 
         ButtonDifficulty buttonDifficulty = new ButtonDifficulty(difficulty);
         addObject(buttonDifficulty, 763, 17);
         addObject(ButtonMusic.getInstance(), 773, 577);
-
+        addObject(countdown, 150, 25);
         spielerUndHausErstellen();
         schlittenZufaelligErstellen();
         spawnRandomCars();
@@ -81,11 +108,11 @@ public class Winterwelt extends World
 
     private void spielerUndHausErstellen()
     {
-        Santa santa = new Santa();
+        santa = new Santa();
         addObject(santa,0,0);
         santa.respawn();
 
-        Rentier rentier = new Rentier();
+        rentier = new Rentier();
         addObject(rentier,0,0);
         rentier.respawn();
 
@@ -116,7 +143,7 @@ public class Winterwelt extends World
                     continue;
                 }   
             }
-            Logger.getInstance().info(String.format("Created %d cars{speed: %d, left: %b}, Y-Level %d", carsCount, speed, drivingLeft, y));
+            logger.info(String.format("Created %d cars{speed: %d, left: %b}, Y-Level %d", carsCount, speed, drivingLeft, y));
         }
     }
     private boolean schlittenRichtung = false;
@@ -146,7 +173,7 @@ public class Winterwelt extends World
                 }
                 
             }
-            Logger.getInstance().info(String.format("Created %d slides{speed: %d, left: %b}, Y-Level %d", schlittenCount, speed, drivingLeft, y));
+            logger.info(String.format("Created %d slides{speed: %d, left: %b}, Y-Level %d", schlittenCount, speed, drivingLeft, y));
             
             
        }
@@ -159,7 +186,7 @@ public class Winterwelt extends World
         String key = Greenfoot.getKey();
         
         if (key != null && key.equals("f3")) {
-            Logger logger = Logger.getInstance();
+            
             logger.setPrintLogs(!logger.isPrintLogs());
         }
         
@@ -234,6 +261,8 @@ public class Winterwelt extends World
     public static Winterwelt getInstance() {
         return instance;
     }
+
+    
 
 
         /**

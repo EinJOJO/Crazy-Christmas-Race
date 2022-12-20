@@ -18,12 +18,15 @@ public class Timer implements Logger.Loggable
     private long timerStarted; 
     private boolean running = false;
     private long ende = 0;
+    private boolean paused;
+    private long pauseStartTimeMillis;
+    private long pausedTimeMillis;
     
     /**
      * @return ob der Timer gerade läuft. 
      */
     public boolean isRunning() {
-        return running;
+        return running && !paused;
     }
     
     /**
@@ -33,11 +36,35 @@ public class Timer implements Logger.Loggable
         timerStarted = System.currentTimeMillis();  // Aktuelle Zeit in Millisekunden seit 1970.
         running = true;
     }
+
+
+    public void pause() {
+        paused = true;
+        pauseStartTimeMillis = System.currentTimeMillis();
+    }
+
+    public boolean isPaused() {
+        return paused;
+    }
+
+    /**
+     * Lasse den Timer weiterlaufen ohne einen neuen Startzeitpunkt zu setzen
+     */
+    public void resume() {
+        paused = false;
+        pausedTimeMillis += System.currentTimeMillis() - pauseStartTimeMillis;
+    }
     /**
      * @return Ob der Timer das Ende erreicht hat, was vorher definiert wurde.
      */
     public boolean isFinished() { 
-        return System.currentTimeMillis() >= timerStarted + ende; // Ob die aktuelle Zeit größer ist als die Startzeit + die zuwartende Zeit.
+        return System.currentTimeMillis() >= timerStarted + ende + pausedTimeMillis; // Ob die aktuelle Zeit größer ist als die Startzeit + die zuwartende Zeit. + Die Zeit, die mit Pause machen verbracht wurde.
+    }
+
+    public long timeRunning() {
+        long deltaTime = System.currentTimeMillis() - timerStarted;
+        deltaTime -= pausedTimeMillis;
+        return deltaTime;
     }
     
     /**
