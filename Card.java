@@ -6,8 +6,9 @@ import greenfoot.GreenfootImage;
 
 /**
  * @author Johannes.
+ * IS NOT USED
  */
-public class Card extends Actor{
+public class Card extends Actor { 
 
     private String cardContent;
     private GreenfootImage cardImage; 

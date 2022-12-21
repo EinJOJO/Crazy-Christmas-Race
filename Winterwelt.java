@@ -15,7 +15,8 @@ public class Winterwelt extends World
     public static Zaehler counterRentier;
     public static Winterwelt instance;
     public static GreenfootSound music = new GreenfootSound("gameMusic.mp3");
-    
+
+    private PauseCard pauseCard = new PauseCard();
     private Santa santa;
     private Rentier rentier;
     private Logger logger = Logger.getInstance();
@@ -48,9 +49,10 @@ public class Winterwelt extends World
     }
 
     
-    private void endGame() {
-        logger.info("Game ended.");
+    public void endGame() {
         
+        logger.info("Game ended.");
+        countdown.stop();
         int pSanta = counterSanta.punkte;
         int pRentier = counterRentier.punkte;
         
@@ -72,7 +74,7 @@ public class Winterwelt extends World
         logger.info("Difficulty: " + difficulty.toString());
         GreenfootImage background = new GreenfootImage("Winterwelt.jpg");
         setBackground(background);
-        setPaintOrder(Card.class, Button.class ,Santa.class, Rentier.class, Zaehler.class, Haus.class, Auto.class, Schlitten.class);
+        setPaintOrder( Button.class, PauseCard.class ,Santa.class, Rentier.class, Zaehler.class, Haus.class, Auto.class, Schlitten.class);
 
         Greenfoot.setSpeed(50);
 
@@ -88,6 +90,7 @@ public class Winterwelt extends World
         addObject(buttonDifficulty, 763, 17);
         addObject(ButtonMusic.getInstance(), 773, 577);
         addObject(countdown, 150, 25);
+        addObject(new ButtonPause(), 690, 17);
         spielerUndHausErstellen();
         schlittenZufaelligErstellen();
         spawnRandomCars();
@@ -193,7 +196,6 @@ public class Winterwelt extends World
         
         if (key != null && key.equals("escape"))  {
             setRunning(!isRunning());    
-            Greenfoot.setWorld(new StartScreen());
         }
 
 
@@ -257,6 +259,22 @@ public class Winterwelt extends World
     }
     public void setRunning(boolean running) {
         this.running = running;
+
+        if (running) {
+            countdown.start();
+            removeObject(pauseCard);
+            removeObject(pauseCard.endButton);
+            removeObject(pauseCard.resumeButton);
+        } else {
+            addObject(pauseCard, 423, 251);
+            countdown.pause();
+            addObject(pauseCard.endButton, 350,410);
+            addObject(pauseCard.resumeButton, 500, 410); 
+        }
+    }
+
+    public void pause() {
+        setRunning(false);
     }
 
     public static Winterwelt getInstance() {

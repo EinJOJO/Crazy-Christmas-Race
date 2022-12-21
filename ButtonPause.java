@@ -1,7 +1,7 @@
 public class ButtonPause extends Button {
 
     public ButtonPause() {
-        super("button.png");
+        super("ButtonPause.png");
         
     }
 

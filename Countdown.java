@@ -14,9 +14,14 @@ public class Countdown extends Textbox
         this.onFinishCallback = onFinishCallbackMethod;
         start();
     }
+
+    public void stop() {
+        timer.stop();
+    }
     
     public void act()
     {
+        if (!timer.isRunning()) return;
         if (timer.isFinished()) {
             if (onFinishCallback != null) {
                 onFinishCallback.run();

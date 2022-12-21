@@ -72,6 +72,9 @@ public class Auto extends Actor implements Logger.Loggable
 
     public void act() 
     {
+        if (getWorld() != null && getWorld() instanceof Winterwelt) {
+            if (!((Winterwelt )getWorld()).isRunning()) return;
+        }
         if(!spawned) return;
         if (brakeTimer.isRunning()) {
             if (brakeTimer.isFinished()) {

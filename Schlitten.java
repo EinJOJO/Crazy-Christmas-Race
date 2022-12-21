@@ -31,6 +31,9 @@ public class Schlitten extends Actor implements Logger.Loggable
     
     public void act() 
     {
+        if (getWorld() != null && getWorld() instanceof Winterwelt) {
+            if (!((Winterwelt )getWorld()).isRunning()) return;
+        }
         if (respawnProgress != -1) {
             respawnWithFading();
             return;

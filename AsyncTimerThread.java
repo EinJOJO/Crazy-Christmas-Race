@@ -27,7 +27,7 @@ public class AsyncTimerThread extends Thread {
         task.toRun();
         timer.stop();
         // System.out.println("[#" + this.getId() + "] Has finished the task");
-        this.stop();
+        
     }
 
 }

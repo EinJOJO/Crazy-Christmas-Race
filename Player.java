@@ -55,7 +55,9 @@ public abstract class Player extends Actor implements Logger.Loggable {
     //Implementieren
     @Override
     public void act() {
-        
+        if (getWorld() != null && getWorld() instanceof Winterwelt) {
+            if (!((Winterwelt )getWorld()).isRunning()) return;
+        }
         handleInput();    
         
         /**

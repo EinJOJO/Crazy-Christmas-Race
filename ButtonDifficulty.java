@@ -48,7 +48,6 @@ public class ButtonDifficulty extends Button{
         if (getWorld() == null || (!(getWorld() instanceof Winterwelt))) {
             return;
         }
-        Winterwelt world = (Winterwelt) getWorld();
 
         Greenfoot.setWorld(new Winterwelt(difficulty, gameMinutes()));
         
