@@ -1,10 +1,15 @@
 {
-    "java.project.referencedLibraries": [
-        "lib/**/*.jar",
-        "c:\\Program Files\\Greenfoot\\lib\\extensions\\greenfoot.jar",
-        "c:\\Program Files\\Greenfoot\\lib\\extensions\\submitter.jar",
-        "d:\\Tools\\Greenfoot\\greenfoot\\lib\\greenfoot.jar"
-    ],
+    "java.project.referencedLibraries": {
+        "include": [
+            "lib/**/*.jar",
+            "c:\\Program Files\\Greenfoot\\lib\\extensions\\greenfoot.jar",
+            "c:\\Program Files\\Greenfoot\\lib\\extensions\\submitter.jar",
+            "d:\\Tools\\Greenfoot\\greenfoot\\lib\\greenfoot.jar"
+        ],
+        "exclude": [
+            "lib/gson-2.10.jar"
+        ]
+    },
     "hidefiles.configurationType": "local",
     "hidefiles.globalConfig": {
         "profiles": [

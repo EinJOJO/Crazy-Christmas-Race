@@ -1,4 +1,3 @@
-
 public class Santa extends Player
 {
     public Santa()

@@ -1,3 +1,5 @@
+import greenfoot.*;
+
 public class ButtonMechanics extends Button {
 
 
@@ -7,8 +9,7 @@ public class ButtonMechanics extends Button {
 
     @Override
     public void onClick() {
-        
-        System.out.println("Nö");        
+        Greenfoot.setWorld(new MechanicsScreen());
     }
     
 }

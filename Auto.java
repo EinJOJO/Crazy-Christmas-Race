@@ -1,3 +1,6 @@
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import greenfoot.*;
@@ -9,12 +12,29 @@ import greenfoot.*;
  * TODO:
  * - Random Respawn Delay
  */
-public class Auto extends Actor
+public class Auto extends Actor implements Logger.Loggable
 {    
     private final boolean blue;
     private int speed;
+    private int originalSpeed;
+    private int targetSpeed; 
     private final boolean drivingLeft;
     private boolean spawned = false; 
+    private Random random = new Random();
+    private static GreenfootSound s1 = new GreenfootSound("car1.mp3");
+    private static GreenfootSound s2 = new GreenfootSound("car2.mp3");
+    private static GreenfootSound s3 = new GreenfootSound("honk1.mp3");
+    private static GreenfootSound s4 = new GreenfootSound("honk2.mp3");
+    private static GreenfootSound[] crashSounds = new GreenfootSound[]{
+        new GreenfootSound("crash1.mp3"),
+        new GreenfootSound("crash2.mp3"),
+        new GreenfootSound("crash3.mp3")
+    };
+
+    private Timer brakeTimer = new Timer();
+
+    
+
 
     /**
      * Konstruktor 1 von 2. Leere Parameter:
@@ -23,8 +43,10 @@ public class Auto extends Actor
     public Auto() {
         this.blue = true;
         this.speed = 2;
+        targetSpeed = 2;
         this.drivingLeft = false;
         spawn();
+
     }
 
     /**
@@ -34,6 +56,8 @@ public class Auto extends Actor
 
     {
         this.speed = speed;
+        this.targetSpeed = speed;
+        this.originalSpeed = speed;
         this.blue = autoBlau;
         this.drivingLeft = drivesToLeft;
     
@@ -44,38 +68,47 @@ public class Auto extends Actor
         spawn();
     }
 
+    
 
     public void act() 
     {
-
         if(!spawned) return;
-
-        //Auto bewegen.
-        if (drivingLeft) {
-            setLocation(getX() - speed, getY());
-        } else {
-            setLocation(getX() + speed, getY());
+        if (brakeTimer.isRunning()) {
+            if (brakeTimer.isFinished()) {
+                targetSpeed = originalSpeed;
+                brakeTimer.stop();
+            }
         }
 
+        accelerate();
+        
+        if (!playerCollision() && !carCollision()) {
+            if (drivingLeft) {
+                setLocation(getX() - speed, getY());
+            } else {
+                setLocation(getX() + speed, getY());
+            }
+        };
+        //Auto bewegen.
+        
+
+        // Sound
+        playDriveSounds();
+        
         //Auto zurücksetzen
         if (isAtEdge()) {
-            despawn();
-            if (drivingLeft) {
+            despawn(); 
+            // Positioniere...
+            if (drivingLeft) { 
                 setLocation(getWorld().getWidth(), getY());
             } else {
                 setLocation(0, getY());
             }
-            new Timer().scheduleTask(() -> {
-                spawn();
-                while (isTouchingCar()) {
-                    despawn();
-                    Greenfoot.delay(1);
-                    
-                }
-                if (!spawned) {
-                    spawn();
-                }
-            }, 10 * new Random().nextInt(200));
+            // Respawn
+            if (!Winterwelt.getInstance().getCarSpawnQueue().contains(this))  {
+                Winterwelt.getInstance().addToDelayQueue(this);
+            }
+            return;
         }
         
         if (wirdSchneeballBeruehrt()){
@@ -84,7 +117,103 @@ public class Auto extends Actor
         }
         
     }
+
+    public void accelerate() {
+        if (targetSpeed == speed) return;
+        if (targetSpeed > speed) {
+            speed++;
+        } else {
+            speed--;
+        }
+    }
     
+    
+    public boolean carCollision() {
+        if (getHittedCar() != null) { 
+            brake();
+            crashSounds[2].setVolume(30);
+            crashSounds[2].play();
+            return true;
+        } 
+        return false;
+    }
+    public boolean playerCollision() {
+        if (!spawned) return false;
+        if (speed == 0) return false;
+        List<Player> list = getIntersectingObjects(Player.class);
+        if (!list.isEmpty()) {
+            // Call hit by car method
+            for (Player player : list) {
+                player.hitByCar();
+
+                boolean playerHitInFrontOfCar = false;
+                //Decide whether the car should brake or not.
+                if (isDrivingLeft()) {
+                    if (player.getX() < getX() - 45) {
+                        
+                        playerHitInFrontOfCar = true;
+                    }
+                } else {
+                    if (player.getX() > getX() + 45) {
+                        playerHitInFrontOfCar = true;
+                    }
+                }
+
+                if (!playerHitInFrontOfCar) {
+                    return false; // False -> Car will not stop, since the boolean decides whether the move method will be executed.
+                }
+            }
+
+            
+            // PLAY SOUNDS
+            int r = random.nextInt(3);
+            switch (r) {
+                case 0:
+                    s3.setVolume(30);
+                    crashSounds[0].setVolume(20);
+                    crashSounds[0].play();
+                    s3.play();  
+                    break;
+                case 2:
+                    crashSounds[1].setVolume(20);
+                    crashSounds[1].play();
+                case 1:
+                    s4.setVolume(30);
+                    s4.play();  
+                    break;
+
+            } 
+            brake();
+            return true;
+        }
+        return false;
+    }
+
+    private void brake() {
+        targetSpeed = 0;
+            brakeTimer.setEnd(500);
+            brakeTimer.start();
+    }
+
+    public void playDriveSounds() {
+        int i = getObjectsInRange(60, Player.class).size();
+        
+        boolean shouldPlaySounds = i != 0;
+        if (!shouldPlaySounds) return;
+        int r = random.nextInt(2);
+        
+        switch (r) {
+            case 0:
+                 s1.setVolume(30);
+                 s1.play();  
+                break;
+            case 1:
+                 s2.setVolume(30);
+                 s2.play();  
+                break;
+        }   
+    }
+
     public boolean wirdSchneeballBeruehrt()
     {
         
@@ -129,11 +258,63 @@ public class Auto extends Actor
         return spawned;
     }
 
+
+    private Auto getHittedCar() {
+        if (!isTouchingCar()) return null;
+
+        List<Auto> list = getIntersectingObjects(Auto.class);
+        Auto hittedCar = null;
+        
+        if (drivingLeft) {
+            for (Auto a : list) {
+                if (a.getX() < getX()) { // Wenn das Auto vor einem ist:
+                    hittedCar = a;
+                }
+            }
+        } else {
+            for (Auto a : list) {
+                if (a.getX() > getX()) { // Wenn das Auto vor einem ist:
+                    hittedCar = a;
+                }
+            }
+        }
+        return hittedCar;
+    }
+
     public boolean isTouchingCar() {
-        return !getIntersectingObjects(Auto.class).isEmpty();
+        if (!spawned) return false;
+        List<Auto> list = getIntersectingObjects(Auto.class);
+        if (list.isEmpty()) return false;
+        
+        for (Auto auto : list) {
+            if (!auto.isSpawned()) {
+                continue;
+            }
+            return true;    
+        }
+        return false;
+        
     }
     
     public int getSpeed() {
         return speed;
+    }
+
+    @Override
+    public Map<String, String> getLogInfo() {
+        Map<String, String> map = new HashMap<>();
+
+        map.put("isBlue", String.valueOf(blue));
+        map.put("currentSpeed", String.valueOf(speed));
+        map.put("originalSpeed", String.valueOf(originalSpeed));
+        map.put("targetSpeed", String.valueOf(targetSpeed));
+        map.put("drivingLeft", String.valueOf(drivingLeft));
+        map.put("spawned", String.valueOf(spawned));
+        map.put("currentX", String.valueOf(getX()));
+        map.put("currentY", String.valueOf(getY()));
+        brakeTimer.getLogInfo().forEach((k,v) -> map.put("brakeTimer."+k, v));
+
+
+        return map;
     }
 }

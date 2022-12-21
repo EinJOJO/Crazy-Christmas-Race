@@ -1,3 +1,4 @@
+import greenfoot.*;
 public class ButtonCredits extends Button {
 
 
@@ -8,7 +9,7 @@ public class ButtonCredits extends Button {
     @Override
     public void onClick() {
         
-        
+        Greenfoot.setWorld(new CreditsScreen());
     }
     
 }

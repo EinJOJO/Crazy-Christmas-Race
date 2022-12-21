@@ -6,13 +6,18 @@ public class ButtonStartGame extends Button {
         super("ButtonStartGame.png");
     }
     
-    private boolean loading = false;
 
     @Override
     public void onClick() {
-        if (loading ) return;
-        loading = true;
-        Greenfoot.setWorld(new Winterwelt());
+        if (!(getWorld() instanceof StartScreen)) return;
+        StartScreen world = (StartScreen) getWorld();
+        
+        Greenfoot.setWorld(new Winterwelt(world.buttonDifficulty.getDifficulty(), minutes()));
+        StartScreen.music.stop();
+    }
+    
+    private int minutes() {
+        return ButtonPlaytime.getInstance().getPlayTime();
     }
     
 }

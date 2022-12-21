@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Objects;
 
 
@@ -17,6 +18,7 @@ public class Logger {
     private boolean printLogs;
     BufferedWriter writer;
     ArrayList<String> stash;
+    
 
     public Logger() {
         instance = this;
@@ -37,6 +39,11 @@ public class Logger {
 
     public void setPrintLogs(boolean printLogs) {
         this.printLogs = printLogs;
+        if (printLogs) {
+            info("Enabled logger printing");
+        } else {
+           System.out.println("Disabled logger printing");
+        };
     }
 
     public boolean isPrintLogs() {
@@ -49,7 +56,30 @@ public class Logger {
     }
 
     public void info(Object object) {
-        info(Objects.toString(object, "Object is null"));
+        if (object == null) {
+            info("Provided Object is null");
+            return;
+        }
+        if (object instanceof Loggable) {
+            info(object.getClass().getName() + " implements Loggable:");
+            Map<String, String> map = ((Loggable) object).getLogInfo();
+            map.forEach((key, value) -> {
+                if (key == null) {
+                    return;
+                }
+                if (value == null) {
+                    value = "null";
+                }
+                info(String.format("[%s] => %s", key, value));
+            });
+            
+        } else {
+            info(Objects.toString(object, "Object is null"));
+        }
+    }
+    
+    public void printNewInstanceInfo(Object o) {
+        info ("New instance of " + o.getClass().getName());
     }
 
 
@@ -88,6 +118,8 @@ public class Logger {
                 stash.forEach((message) -> {
                     System.out.println(message);
                 });
+                
+                System.out.println(String.format("^^^^^^ Loaded %d stashed messages ^^^^^^", stash.size()));
                 stash.clear();
             }
             System.out.println(logMessage);
@@ -103,6 +135,13 @@ public class Logger {
                 System.out.println("Could not write into logging file.");
                 e.printStackTrace();
             }
+        }
+    }
+    
+    interface Loggable {
+        public Map<String, String> getLogInfo();
+        public default void printLogs() {
+            Logger.getInstance().info(this);
         }
     }
 }

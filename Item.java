@@ -1,11 +1,9 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
-/**
- * Write a description of class Item here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
- */
+
+ /**
+  * Not implemented
+  */
 public abstract class Item extends Actor
 {
     /**
